@@ -1430,3 +1430,6 @@
   color: #bbb;
 }
 .social-link.em:hover { color: #e8587a; border-color: #e8587a; }
+
+
+h1, h2, h3, h4, h5, h6, .hero-title h1, .pb-title h2, .about-me-headline, .about-big, .mname, .proj-title { font-family: 'Inter Tight', sans-serif !important; }
