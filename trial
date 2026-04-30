@@ -1,0 +1,1892 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Caveat:wght@400;700&display=swap"
+    rel="stylesheet">
+  <title>Saihaj Dheer â€” UI/UX Designer</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fdf9f6;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(160, 145, 130, 0.32) 1.2px, transparent 1.2px);
+      background-size: 28px 28px;
+      mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 10%, transparent 100%);
+      -webkit-mask-image: radial-gradient(ellipse 85% 85% at 50% 50%, black 10%, transparent 100%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* SPLASH */
+    #splash {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity .7s;
+    }
+
+    #splash.out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .name-row {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .letter {
+      font-size: clamp(44px, 8vw, 88px);
+      font-weight: 900;
+      color: #1a1a1a;
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .45s ease, transform .45s ease;
+      letter-spacing: -3px;
+      line-height: 1;
+    }
+
+    .letter.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .letter.pk {
+      color: #e8587a;
+    }
+
+    .sp-gap {
+      width: clamp(10px, 2vw, 22px);
+    }
+
+    #usvg {
+      display: block;
+      margin-top: -4px;
+      opacity: 0;
+      transition: opacity .3s;
+      position: relative;
+      z-index: 1;
+      max-width: 90vw;
+    }
+
+    #usvg.vis {
+      opacity: 1;
+    }
+
+    #upath {
+      stroke-dasharray: 560;
+      stroke-dashoffset: 560;
+    }
+
+    .splash-sub {
+      font-family: 'Caveat', cursive;
+      font-size: 18px;
+      color: #aaa;
+      margin-top: 14px;
+      letter-spacing: 2px;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity .5s, transform .5s;
+      position: relative;
+      z-index: 1;
+    }
+
+    .splash-sub.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #main {
+      display: none;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 52px;
+      border-bottom: 1px solid rgba(180, 165, 150, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(253, 249, 246, 0.93);
+      backdrop-filter: blur(10px);
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .logo-wrap img {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .logo-name {
+      font-family: 'Caveat', cursive;
+      font-size: 17px;
+      color: #555;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+
+    .navlinks {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .navlinks a {
+      text-decoration: none;
+      font-size: 13px;
+      color: #888;
+      transition: color .2s;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .navlinks a:hover {
+      color: #1a1a1a;
+    }
+
+    .navbtn {
+      background: #e8587a;
+      color: #fff;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: background .2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .navbtn:hover {
+      background: #c9385e;
+    }
+
+    /* HERO */
+    #home {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 24px 30px;
+      min-height: 680px;
+    }
+
+    .hero-title {
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      margin-bottom: 10px;
+    }
+
+    .hero-title .sub {
+      font-family: 'Caveat', cursive;
+      font-size: 17px;
+      color: #bbb;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .hero-title h1 {
+      font-size: clamp(20px, 3vw, 38px);
+      font-weight: 900;
+      color: #1a1a1a;
+      letter-spacing: -1.5px;
+      line-height: 1.15;
+    }
+
+    .hero-title h1 .pk {
+      color: #e8587a;
+    }
+
+    .scene {
+      position: relative;
+      width: 100%;
+      max-width: 1080px;
+      height: 540px;
+      z-index: 2;
+      margin: 0 auto;
+    }
+
+    .center-photo {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 260px;
+      height: auto;
+      z-index: 10;
+      cursor: pointer;
+      transition: transform .3s;
+    }
+
+    .center-photo:hover {
+      transform: translateX(-50%) scale(1.04) translateY(-6px);
+    }
+
+    .center-photo img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .photo-hint {
+      display: none;
+    }
+
+    .pol {
+      position: absolute;
+      background: #fff;
+      padding: 8px 8px 28px;
+      border-radius: 3px;
+      box-shadow: 0 3px 16px rgba(0, 0, 0, .09);
+      cursor: grab;
+      user-select: none;
+      z-index: 5;
+      width: 122px;
+      transition: box-shadow .2s;
+    }
+
+    .pol:hover {
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
+      z-index: 15;
+    }
+
+    .pol:active {
+      cursor: grabbing;
+    }
+
+    .pol-img {
+      width: 100%;
+      height: 84px;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+    }
+
+    .pol-lbl {
+      font-family: 'Caveat', cursive;
+      font-size: 13px;
+      font-weight: 700;
+      color: #333;
+      text-align: center;
+      display: block;
+      margin-top: 4px;
+    }
+
+    .pol-sub {
+      font-family: 'Caveat', cursive;
+      font-size: 10px;
+      color: #bbb;
+      text-align: center;
+      display: block;
+    }
+
+    @keyframes sw {
+
+      0%,
+      100% {
+        transform: rotate(var(--r));
+      }
+
+      50% {
+        transform: rotate(calc(var(--r)+2deg)) translateY(-4px);
+      }
+    }
+
+    .sa {
+      animation: sw 3.2s ease-in-out infinite;
+    }
+
+    .sb {
+      animation: sw 3.8s ease-in-out infinite reverse;
+    }
+
+    .sc {
+      animation: sw 2.9s ease-in-out infinite .4s;
+    }
+
+    .bg-swim {
+      background: #dbeafe;
+    }
+
+    .bg-coffee {
+      background: #fef9c3;
+    }
+
+    .bg-travel {
+      background: #d1fae5;
+    }
+
+    .bg-food {
+      background: #fce7f3;
+    }
+
+    .bg-doodle {
+      background: #ede9fe;
+    }
+
+    .bg-sky {
+      background: #e0f2fe;
+    }
+
+    .bg-shop {
+      background: #fce7f3;
+    }
+
+    .bg-uxd {
+      background: #d1fae5;
+    }
+
+    /* PROJECTS */
+    #projects {
+      padding: 80px 52px 160px;
+      border-top: 1px solid rgba(180, 165, 150, 0.12);
+    }
+
+    .projects-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 860px;
+      margin: 0 auto 52px;
+    }
+
+    .projects-header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .proj-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: #f5f0ea;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      border: 1px solid rgba(180, 165, 150, 0.2);
+    }
+
+    .proj-title {
+      font-size: 24px;
+      font-weight: 900;
+      color: #1a1a1a;
+      letter-spacing: -0.5px;
+    }
+
+    .proj-sub {
+      font-size: 13px;
+      color: #aaa;
+      margin-top: 2px;
+      font-style: italic;
+    }
+
+    .see-all-btn {
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      padding: 12px 26px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: background .2s;
+    }
+
+    .see-all-btn:hover {
+      background: #333;
+    }
+
+    .stack-container {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      max-width: 920px;
+      margin: 0 auto;
+      padding-bottom: 120px;
+    }
+
+    .scard {
+      position: sticky;
+      height: 480px;
+      border-radius: 28px;
+      display: flex;
+      overflow: hidden;
+      box-shadow: 0 -8px 40px rgba(0, 0, 0, 0.08); /* shadow upwards helps stacking effect */
+      border: 1px solid rgba(180, 165, 150, 0.2);
+      transform-origin: top center;
+      transition: filter 0.3s ease;
+      cursor: pointer;
+    }
+    
+    .scard:nth-child(1) { top: 120px; }
+    .scard:nth-child(2) { top: 150px; }
+    .scard:nth-child(3) { top: 180px; }
+
+    .scard-img-side {
+      width: 55%;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .scard-img-side img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .scard:hover .scard-img-side img {
+      transform: scale(1.03);
+    }
+
+    .scard-content {
+      width: 45%;
+      background: #fff;
+      padding: 56px 48px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .scard:nth-child(1) .scard-img-side { background: #dbeafe; }
+    .scard:nth-child(2) .scard-img-side { background: #fce7f3; }
+    .scard:nth-child(3) .scard-img-side { background: #dcfce7; }
+
+    .scard-cat {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .scard-cat-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .scard:nth-child(1) .scard-cat-dot { background: #3b82f6; } /* UI/UX Blue */
+    .scard:nth-child(2) .scard-cat-dot { background: #ec4899; } /* UI/UX Pink */
+    .scard:nth-child(3) .scard-cat-dot { background: #22c55e; } /* Visual Green */
+
+    .scard-title {
+      font-family: 'Inter', sans-serif;
+      font-size: clamp(28px, 3vw, 36px);
+      font-weight: 900;
+      color: #0b1a40;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      margin-bottom: 24px;
+    }
+
+    .scard-stats {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 36px;
+    }
+
+    .scard-stats p {
+      margin-bottom: 6px;
+    }
+
+    .view-btn {
+      background: #0a1128;
+      color: #fff;
+      border: none;
+      padding: 14px 26px;
+      border-radius: 50px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: background .2s, transform .2s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: fit-content;
+      text-decoration: none;
+    }
+
+    .view-btn:hover {
+      background: #1c2b59;
+      transform: translateY(-2px);
+    }
+
+    .view-btn svg {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* ABOUT */
+    #about {
+      padding: 80px 52px 100px;
+      border-top: 1px solid rgba(180, 165, 150, 0.12);
+    }
+
+    .about-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 70px;
+      align-items: center;
+    }
+
+    .photo-card {
+      background: #1a1a1a;
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      transform: rotate(-3deg);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, .2);
+      transition: transform .4s ease;
+    }
+
+    .photo-card:hover {
+      transform: rotate(0deg) scale(1.02);
+    }
+
+    .photo-card .pc-img {
+      width: 100%;
+      aspect-ratio: .78;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      filter: grayscale(15%);
+    }
+
+    .photo-card-footer {
+      padding: 14px 18px 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .pc-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .pc-connect {
+      background: #fff;
+      color: #1a1a1a;
+      border: none;
+      border-radius: 50px;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: background .2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .pc-connect:hover {
+      background: #e8f4ff;
+    }
+
+    .pc-linkedin {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 4px 18px 16px;
+    }
+
+    .pc-li-link {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      width: 100%;
+    }
+
+    .pc-li-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #e8587a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .pc-li-txt {
+      font-size: 11px;
+      color: #888;
+      transition: color .2s;
+    }
+
+    .pc-li-txt span {
+      color: #bbb;
+      font-weight: 500;
+      transition: color .2s;
+    }
+
+    .pc-li-link:hover .pc-li-txt {
+      color: #aaa;
+    }
+
+    .pc-li-link:hover .pc-li-txt span {
+      color: #fff;
+    }
+
+    .about-big {
+      font-size: clamp(26px, 3.2vw, 44px);
+      font-weight: 800;
+      color: #1a1a1a;
+      line-height: 1.22;
+      letter-spacing: -1.5px;
+      margin-bottom: 32px;
+    }
+
+    .about-big .pk {
+      color: #e8587a;
+    }
+
+    .mini-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #f5f0ea;
+      border-radius: 8px;
+      padding: 3px 10px;
+      font-size: 12px;
+      vertical-align: middle;
+      margin: 0 3px;
+      border: 1px solid rgba(180, 165, 150, 0.28);
+      font-family: 'Caveat', cursive;
+      font-weight: 700;
+      color: #555;
+      white-space: nowrap;
+    }
+
+    .about-ctas {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .cta-res {
+      background: transparent;
+      color: #1a1a1a;
+      border: 1.5px solid #ccc;
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: border-color .2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .cta-res:hover {
+      border-color: #888;
+    }
+
+    .cta-abt {
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: background .2s;
+    }
+
+    .cta-abt:hover {
+      background: #333;
+    }
+
+    /* MODAL */
+    .mbg {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .42);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mbg.open {
+      display: flex;
+    }
+
+    .mcard {
+      background: #fdf9f6;
+      border-radius: 24px;
+      padding: 40px;
+      max-width: 480px;
+      width: 92%;
+      position: relative;
+      border: 1px solid #f0e8df;
+      max-height: 88vh;
+      overflow-y: auto;
+    }
+
+    .mclose {
+      position: absolute;
+      top: 16px;
+      right: 18px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: #bbb;
+    }
+
+    .mname {
+      font-size: 28px;
+      font-weight: 900;
+      color: #1a1a1a;
+      letter-spacing: -1px;
+      margin-bottom: 2px;
+    }
+
+    .mrole {
+      font-family: 'Caveat', cursive;
+      font-size: 17px;
+      color: #e8587a;
+      margin-bottom: 18px;
+    }
+
+    .msec {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #bbb;
+      margin: 18px 0 10px;
+    }
+
+    .mexp {
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #f5ede8;
+    }
+
+    .mexp:last-child {
+      border-bottom: none;
+    }
+
+    .mexp-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+
+    .mexp-org {
+      font-size: 12px;
+      color: #e8587a;
+      margin-top: 1px;
+    }
+
+    .mexp-date {
+      font-size: 11px;
+      color: #bbb;
+      margin-top: 1px;
+    }
+
+    .mexp-desc {
+      font-size: 12px;
+      color: #666;
+      line-height: 1.6;
+      margin-top: 5px;
+    }
+
+    .mtags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .mtag {
+      background: #fce7f3;
+      color: #9d174d;
+      border-radius: 50px;
+      padding: 4px 12px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .mtag-blue {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .mlink {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      background: #f5f0ea;
+      border-radius: 50px;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-top: 8px;
+      margin-right: 8px;
+      transition: background .2s;
+      border: 1px solid rgba(180, 165, 150, 0.2);
+    }
+
+    .mlink:hover {
+      background: #ede8e0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- SPLASH -->
+  <div id="splash">
+    <div class="name-row">
+      <span class="letter" data-i="0">S</span><span class="letter pk" data-i="1">A</span>
+      <span class="letter" data-i="2">I</span><span class="letter pk" data-i="3">H</span>
+      <span class="letter" data-i="4">A</span><span class="letter" data-i="5">J</span>
+      <span class="sp-gap"></span>
+      <span class="letter" data-i="6">D</span><span class="letter pk" data-i="7">H</span>
+      <span class="letter" data-i="8">E</span><span class="letter" data-i="9">E</span>
+      <span class="letter pk" data-i="10">R</span>
+    </div>
+    <svg id="usvg" width="560" height="22" viewBox="0 0 560 22">
+      <path id="upath" d="M20 14 Q280 4 540 14" stroke="#e8587a" stroke-width="3.5" stroke-linecap="round"
+        fill="none" />
+    </svg>
+    <p class="splash-sub" id="splashSub">ui/ux designer &nbsp;Â·&nbsp; crafting purposeful experiences</p>
+  </div>
+
+  <div id="main">
+
+    <nav>
+      <!-- Logo â†’ scroll to top -->
+      <a class="logo-wrap" href="#home" style="text-decoration:none; color:inherit;">
+        <img src="assets/Saihaj%20logo.png" alt="Saihaj Dheer">
+        <span class="logo-name">Saihaj Dheer</span></a>
+      <ul class="navlinks">
+        <!-- Home â†’ scroll to top -->
+        <li><a href="#home">Home</a></li>
+        <!-- Projects â†’ scroll to projects section -->
+        <li><a href="#projects">Projects</a></li>
+        <!-- Resume â†’ opens PDF download -->
+        <li><a id="resumeNavLink" onclick="openResume()" style="cursor: pointer;">Resume</a></li>
+        <!-- About â†’ scroll to about section -->
+        <li><a href="#about">About</a></li>
+      </ul>
+      <!-- Say hello â†’ mailto -->
+      <a class="navbtn" href="mailto:saihajdheer@gmail.com">Say hello</a>
+    </nav>
+
+    <!-- HERO â€” id="home" so nav scrolls here -->
+    <div id="home">
+      <div class="hero-title">
+        <span class="sub">hello world, i'm saihaj dheer</span>
+        <h1>Crafting <span class="pk">Human-First</span> &amp; Meaningful Digital Experiences</h1>
+      </div>
+      <div class="scene" id="scene">
+        <div class="center-photo" id="centerCard" onclick="openModal()">
+          <img src="assets/image 47.png" alt="Saihaj Dheer" style="width:100%;height:auto;display:block;" />
+          <div class="photo-hint">tap to know me âœ¦</div>
+        </div>
+        <div class="pol sa" id="p1" style="top:38px;left:218px;--r:-7deg;transform:rotate(-7deg)" data-b="-7">
+          <div class="pol-img bg-swim">ðŸŠ</div><span class="pol-lbl">Swimming</span><span class="pol-sub">water is
+            peace</span>
+        </div>
+        <div class="pol sb" id="p8" style="top:195px;left:92px;--r:-5deg;transform:rotate(-5deg)" data-b="-5">
+          <div class="pol-img bg-uxd">ðŸŽ¨</div><span class="pol-lbl">UI/UX Design</span><span class="pol-sub">it's not
+            work, it's life</span>
+        </div>
+        <div class="pol sc" id="p2" style="bottom:68px;left:118px;--r:6deg;transform:rotate(6deg)" data-b="6">
+          <div class="pol-img bg-coffee">â˜•</div><span class="pol-lbl">Coffee</span><span class="pol-sub">always first
+            sip</span>
+        </div>
+        <div class="pol sa" id="p6" style="bottom:38px;left:305px;--r:-8deg;transform:rotate(-8deg)" data-b="-8">
+          <div class="pol-img bg-sky">â˜ï¸</div><span class="pol-lbl">Sky Lover</span><span class="pol-sub">clouds
+            &gt; people</span>
+        </div>
+        <div class="pol sb" id="p5" style="top:28px;right:205px;--r:8deg;transform:rotate(8deg)" data-b="8">
+          <div class="pol-img bg-doodle">âœï¸</div><span class="pol-lbl">Doodling</span><span class="pol-sub">line art
+            nerd</span>
+        </div>
+        <div class="pol sc" id="p7" style="top:145px;right:74px;--r:6deg;transform:rotate(6deg)" data-b="6">
+          <div class="pol-img bg-shop">ðŸ›ï¸</div><span class="pol-lbl">Shopping</span><span class="pol-sub">add to
+            cart always</span>
+        </div>
+        <div class="pol sa" id="p4" style="top:315px;right:165px;--r:-6deg;transform:rotate(-6deg)" data-b="-6">
+          <div class="pol-img bg-food">ðŸœ</div><span class="pol-lbl">Foodie</span><span class="pol-sub">plates over
+            deadlines</span>
+        </div>
+        <div class="pol sb" id="p3" style="bottom:48px;right:78px;--r:10deg;transform:rotate(10deg)" data-b="10">
+          <div class="pol-img bg-travel">âœˆï¸</div><span class="pol-lbl">Travelling</span><span class="pol-sub">new
+            city, who dis</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECTS â€” id="projects" -->
+    <div id="projects">
+      <div class="projects-header">
+        <div class="projects-header-left">
+          <div class="proj-icon">ðŸ—‚</div>
+          <div>
+            <div class="proj-title">Featured Projects</div>
+            <div class="proj-sub">Blood, sweat, and pixels.</div>
+          </div>
+        </div>
+        <button class="see-all-btn" onclick="openModal()">See All â†—</button>
+      </div>
+            <div class="stack-container">
+        
+        <!-- Project 1: UI/UX (Blue) -->
+        <div class="scard">
+          <div class="scard-img-side">
+            <img src="assets/helpsters cover img.png" alt="Helpsters App">
+          </div>
+          <div class="scard-content">
+            <div class="scard-cat"><div class="scard-cat-dot"></div>UI/UX Design</div>
+            <div class="scard-title">Helpsters App<br>Redesign</div>
+            <div class="scard-stats">
+              <p>Accessibility-focused digital application</p>
+              <p>Clear, inclusive visual communication</p>
+            </div>
+            <a href="assets/dyslexia app case study (Helpsters).pdf" target="_blank" class="view-btn" style="text-decoration: none;">View Details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 16 16 12 12 8"></polyline>
+                <line x1="8" y1="12" x2="16" y2="12"></line>
+              </svg></a>
+          </div>
+        </div>
+
+        <!-- Project 2: UI/UX (Pink) -->
+        <div class="scard">
+          <div class="scard-img-side">
+            <img src="assets/tiint_combined.png" alt="tiint Smartwatch">
+          </div>
+          <div class="scard-content">
+            <div class="scard-cat"><div class="scard-cat-dot"></div>UI/UX Design</div>
+            <div class="scard-title">tiint Smartwatch<br>Fitness Tracking</div>
+            <div class="scard-stats">
+              <p>93% positive user feedback</p>
+              <p>28% increase in daily active users</p>
+            </div>
+            <a href="assets/tiint case study.pdf" target="_blank" class="view-btn" style="text-decoration: none;">View Details <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 16 16 12 12 8"></polyline>
+                <line x1="8" y1="12" x2="16" y2="12"></line>
+              </svg></a>
+          </div>
+        </div>
+
+        <!-- Project 3: Visual Identity (Green) -->
+        <div class="scard" onclick="openModal()">
+          <div class="scard-img-side">
+            <img src="assets/visual_identity_1775638990446.png" alt="AYMUN Branding">
+          </div>
+          <div class="scard-content">
+            <div class="scard-cat"><div class="scard-cat-dot"></div>Visual Identity</div>
+            <div class="scard-title">AYMUN Branding<br>& Strategy</div>
+            <div class="scard-stats">
+              <p>Complete visual overhaul & branding</p>
+              <p>Established cohesive brand guidelines</p>
+            </div>
+            <div class="view-btn">View Details 
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 16 16 12 12 8"></polyline>
+                <line x1="8" y1="12" x2="16" y2="12"></line>
+              </svg>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+<!-- ABOUT â€” id="about" -->
+<style>
+  .animated-sticker {
+    display: inline-block;
+    background: #f8f8f8;
+    padding: 4px 10px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    vertical-align: middle;
+    font-size: 24px;
+    animation: float-sticker 3.5s ease-in-out infinite;
+    border: 1px solid #eaeaea;
+    margin: 0 4px;
+    line-height: 1;
+  }
+  .sticker-1 { animation-delay: 0s; }
+  .sticker-2 { animation-delay: 1s; padding: 4px 8px; }
+  .sticker-3 { animation-delay: 2s; background: transparent; box-shadow: none; border: none; font-size: 32px; margin-top: -10px; }
+  @keyframes float-sticker {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-8px) rotate(4deg); }
+  }
+  .about-me-headline {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(28px, 3vw, 42px);
+    font-weight: 500;
+    line-height: 1.5;
+    color: #111;
+    letter-spacing: -0.5px;
+  }
+  .photo-card {
+    background: #fff !important;
+    padding: 15px 15px 20px 15px !important;
+    border-radius: 16px !important;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.06) !important;
+    transform: rotate(-3deg) !important;
+    transition: transform 0.4s ease !important;
+    border: 1px solid #f0f0f0 !important;
+  }
+  .photo-card:hover {
+    transform: rotate(0deg) scale(1.02) !important;
+  }
+  .photo-card .pc-img {
+    width: 100% !important;
+    aspect-ratio: 0.8 !important;
+    object-fit: cover !important;
+    object-position: center 20% !important;
+    border-radius: 12px !important;
+    filter: none !important;
+  }
+  .photo-card-text {
+    display: none !important;
+  }
+  .photo-card-footer {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-top: 15px !important;
+    padding: 0 5px !important;
+  }
+  .pc-handle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .pc-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .pc-handle-txt h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #111;
+    margin: 0 0 2px 0;
+  }
+  .pc-handle-txt p {
+    font-size: 11px;
+    color: #888;
+    margin: 0;
+  }
+  .pc-connect {
+    background: #111 !important;
+    color: #fff !important;
+    padding: 8px 16px !important;
+    border-radius: 20px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    transition: background 0.2s, transform 0.2s !important;
+  }
+  .pc-connect:hover {
+    background: #333 !important;
+    transform: translateY(-2px) !important;
+  }
+  .resume-btn {
+    background: #ec4899; 
+    color: white;
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-weight: 500;
+    font-size: 16px;
+    transition: transform 0.2s;
+    box-shadow: 0 10px 20px rgba(236, 72, 153, 0.2);
+  }
+  .resume-btn:hover {
+    transform: translateY(-2px);
+  }
+  .about-btn {
+    background: #222;
+    color: white;
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-weight: 500;
+    font-size: 16px;
+    transition: transform 0.2s;
+  }
+  .about-btn:hover {
+    transform: translateY(-2px);
+  }
+</style>
+
+<div id="about">
+  <div class="about-inner">
+    <div class="photo-card">
+      <img class="pc-img" src="assets/saihaj about me image.jpeg" alt="Saihaj Dheer">
+      <div class="photo-card-text" style="display:none;"></div>
+      <div class="photo-card-footer">
+        <div class="pc-handle">
+          <img class="pc-avatar" src="assets/saihaj about me image.jpeg" alt="Avatar">
+          <div class="pc-handle-txt">
+            <h4>@saihaj-dheer</h4>
+            <p>Linkedin</p>
+          </div>
+        </div>
+        <a href="https://www.linkedin.com/in/saihaj-dheer-192338297/" target="_blank" class="pc-connect">+ Connect</a>
+      </div>
+    </div>
+    
+    <div class="about-text">
+      <p class="about-me-headline">
+        I am Saihaj, UX/UI Design <span class="animated-sticker sticker-1">ðŸ’»</span> student passionate about creating visual identities <span class="animated-sticker sticker-2">ðŸŽ¨</span> and digital experiences <span class="animated-sticker sticker-3">âœ¨</span>
+      </p>
+      
+      <div style="margin-top: 30px; display: flex; gap: 15px; flex-wrap: wrap;">
+        <a href="assets/CV_202604040911586316_12301117.pdf" target="_blank" class="resume-btn" style="text-decoration:none;">Resume</a>
+        <a href="#projects" class="about-btn" style="text-decoration:none;">About Me</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- PHOTO BOOTH -->
+<style>
+/* Camera UI CSS (Instax Style) */
+#photobooth {
+  padding: 140px 52px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #fdf9f6;
+  border-top: 1px solid rgba(180, 165, 150, 0.12);
+  position: relative;
+}
+
+.booth-title {
+  text-align: center;
+  margin-bottom: 70px;
+}
+.booth-title h2 {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 900;
+  color: #1a1a1a;
+  letter-spacing: -1px;
+}
+.booth-title p {
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+  color: #888;
+  margin-top: 8px;
+}
+
+.camera-containerOuter {
+  position: relative;
+  z-index: 10;
+  margin-top: 20px;
+}
+
+.camera-container {
+  position: relative;
+  width: 320px;
+  height: 380px;
+  z-index: 10;
+}
+
+/* Base camera body */
+.cam-body {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #f4d0d8; /* Instax pink */
+  border-radius: 64px;
+  box-shadow: 
+    0 30px 50px rgba(0,0,0,0.1), 
+    inset 4px 4px 10px rgba(255,255,255,0.7),
+    inset -4px -4px 15px rgba(0,0,0,0.05);
+  display: block;
+}
+
+/* Top slot for photos */
+.cam-slot-top {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 220px;
+  height: 12px;
+  background: #111;
+  border-radius: 0 0 6px 6px;
+  box-shadow: inset 0 -4px 6px rgba(0,0,0,0.8);
+  z-index: 11;
+}
+
+/* Flash */
+.cam-flash {
+  position: absolute;
+  top: 35px;
+  left: 105px;
+  width: 34px;
+  height: 70px;
+  background: repeating-linear-gradient(180deg, #e4e4e4, #e4e4e4 2px, #cdcdcd 2px, #cdcdcd 4px);
+  border-radius: 17px;
+  border: 4px solid #fdf1f3;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.1), 0 2px 5px rgba(0,0,0,0.05);
+  z-index: 12;
+}
+
+/* Viewfinder */
+.cam-viewfinder {
+  position: absolute;
+  top: 40px;
+  left: 45px;
+  width: 28px;
+  height: 28px;
+  background: #111;
+  border-radius: 6px;
+  box-shadow: inset 0 4px 6px rgba(0,0,0,0.8), 0 2px 2px rgba(255,255,255,0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 12;
+}
+.cam-viewfinder-inner {
+  width: 10px;
+  height: 10px;
+  background: #333;
+  border-radius: 2px;
+}
+
+/* Sensor/Dot */
+.cam-sensor-1, .cam-sensor-2 {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  background: #111;
+  border-radius: 50%;
+  box-shadow: inset 0 3px 6px rgba(0,0,0,0.9), 0 1px 1px rgba(255,255,255,0.5);
+  z-index: 12;
+}
+.cam-sensor-1 { top: 40px; left: 165px; }
+.cam-sensor-2 { top: 65px; left: 165px; }
+
+/* Branding */
+.cam-brand-text {
+  position: absolute;
+  top: 45px;
+  right: 40px;
+  color: #d19ba5;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  letter-spacing: -1px;
+  text-align: right;
+  line-height: 1;
+  text-shadow: 1px 1px 0px rgba(255,255,255,0.5);
+  z-index: 12;
+}
+.cam-brand-text span {
+  display: block;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 2px;
+  text-shadow: none;
+}
+
+/* Lens outer bump */
+.cam-lens-outer {
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 230px;
+  height: 230px;
+  background: #f4d0d8;
+  border-radius: 50%;
+  box-shadow: 
+    0 15px 25px rgba(0,0,0,0.15), 
+    inset 0 4px 8px rgba(255,255,255,0.6),
+    inset 0 -10px 20px rgba(0,0,0,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  z-index: 15;
+}
+.cam-lens-outer:hover {
+  transform: translateX(-50%) scale(1.02);
+  box-shadow: 0 20px 30px rgba(0,0,0,0.2), inset 0 4px 8px rgba(255,255,255,0.6);
+}
+
+/* Inner pink ring with text */
+.cam-lens-middle {
+  width: 170px;
+  height: 170px;
+  background: #f5d4dc;
+  border-radius: 50%;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1), 0 2px 4px rgba(255,255,255,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Arc text approximations */
+.lens-txt-top, .lens-txt-bottom {
+  position: absolute;
+  font-family: 'Inter', sans-serif;
+  font-size: 8px;
+  color: #bfa1a8;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+.lens-txt-top {
+  top: 15px;
+}
+.lens-txt-bottom {
+  bottom: 15px;
+}
+
+/* Selfie mirror on lens */
+.cam-selfie-mirror {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 12px;
+  height: 20px;
+  background: #fdfdfd;
+  border-radius: 6px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2), 0 1px 2px rgba(255,255,255,0.6);
+  z-index: 16;
+}
+
+/* Actual Black Lens */
+.cam-lens-inner {
+  width: 90px;
+  height: 90px;
+  background: #000;
+  border-radius: 50%;
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.9), 0 0 0 6px #1a1a1a, 0 0 0 8px #f4d0d8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 15;
+}
+.cam-lens-inner video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: none;
+  transform: scaleX(-1); /* mirror video */
+}
+.cam-lens-inner.active video {
+  display: block;
+}
+.cam-lens-text {
+  position: absolute;
+  z-index: 2;
+  color: rgba(255,255,255,0.6);
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-weight: bold;
+  font-size: 10px;
+  font-family: 'Inter', sans-serif;
+}
+.cam-lens-text svg {
+  width: 20px;
+  height: 20px;
+  stroke: rgba(255,255,255,0.6);
+}
+.cam-lens-inner.active .cam-lens-text {
+  display: none;
+}
+
+/* Shutter button */
+.cam-btn {
+  position: absolute;
+  top: 150px;
+  left: 20px;
+  width: 44px;
+  height: 44px;
+  background: #f7d5dc;
+  border-radius: 50%;
+  box-shadow: 
+    inset 0 4px 6px rgba(255,255,255,0.8),
+    inset 0 -2px 4px rgba(0,0,0,0.1),
+    0 4px 6px rgba(0,0,0,0.1), 
+    0 0 0 5px #edb8c4;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s, box-shadow 0.1s;
+  user-select: none;
+  z-index: 12;
+}
+.cam-btn::after {
+  content: '';
+  width: 32px;
+  height: 32px;
+  background: #fce2e7;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.cam-btn:active {
+  transform: scale(0.95);
+  box-shadow: 
+    inset 0 2px 6px rgba(0,0,0,0.1),
+    0 2px 4px rgba(0,0,0,0.05), 
+    0 0 0 5px #edb8c4;
+}
+
+/* The printed polaroid */
+.printed-pol {
+  position: absolute;
+  top: -10px; /* starts hidden behind the top slot */
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 8; /* Below camera body (10) so it hides */
+  pointer-events: none;
+  opacity: 0;
+  height: auto;
+}
+.printed-pol .pol-img {
+  background: #000;
+}
+
+@keyframes print-out-top {
+  0% { transform: translateX(-50%) translateY(0); opacity: 1; z-index: 8; }
+  5% { transform: translateX(-50%) translateY(0); opacity: 1; z-index: 8; } 
+  40% { transform: translateX(-50%) translateY(-220px); opacity: 1; z-index: 8; }
+  /* pop in front of camera */
+  50% { transform: translateX(-50%) translateY(-220px); opacity: 1; z-index: 25; }
+  100% { transform: translateX(-50%) translateY(-260px) rotate(var(--print-rot, 5deg)); opacity: 1; z-index: 25; pointer-events: auto; }
+}
+
+.anim-print {
+  animation: print-out-top 2.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+#booth-canvas {
+  display: none;
+}
+.cam-flash-effect {
+  position: fixed;
+  inset: 0;
+  background: white;
+  z-index: 9999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.1s ease-out;
+}
+.cam-flash-effect.flash {
+  opacity: 0.8;
+  transition: opacity 0.05s ease-in;
+}
+</style>
+
+<div id="photobooth">
+  <div class="booth-title">
+    <h2>Take a Memory</h2>
+    <p>Tap the center lens to begin, then push the round shutter to print your photo!</p>
+  </div>
+
+  <div class="camera-containerOuter" id="cameraContainer">
+    <div class="camera-container">
+      <div class="cam-body">
+        <div class="cam-slot-top"></div>
+        <div class="cam-flash"></div>
+        <div class="cam-sensor-1"></div>
+        <div class="cam-sensor-2"></div>
+        <div class="cam-viewfinder"><div class="cam-viewfinder-inner"></div></div>
+        
+        <div class="cam-brand-text">
+          <span>instax</span>
+          12
+        </div>
+        
+        <div class="cam-btn" onclick="takePhoto()" title="Shutter Button"></div>
+        
+        <div class="cam-lens-outer" id="camLens" onclick="startCamera()">
+          <div class="cam-lens-middle">
+            <div class="cam-selfie-mirror"></div>
+            <div class="cam-lens-inner" id="camLensInner">
+              <div class="cam-lens-text">
+                <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"></path>
+                  <circle cx="12" cy="13" r="4"></circle>
+                </svg>
+                <span>TAP LENS</span>
+              </div>
+              <video id="camVideo" autoplay playsinline></video>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+    
+    <canvas id="booth-canvas" width="400" height="400"></canvas>
+  </div>
+</div>
+<div class="cam-flash-effect" id="flashEffect"></div>
+
+<script>
+  let videoStream = null;
+  const videoEl = document.getElementById('camVideo');
+  const canvasEl = document.getElementById('booth-canvas');
+  const lensInner = document.getElementById('camLensInner');
+  const flashEffect = document.getElementById('flashEffect');
+  
+  async function startCamera() {
+    if (videoStream) return; // already started
+    
+    // Check if we are running on file:// and alert explicitly
+    if (window.location.protocol === 'file:') {
+      alert("Browser Security Block:\nThe browser is completely disabling the camera because you are opening a local file (file:///) instead of a web server.\n\nPlease open this file via VS Code's 'Live Server' extension (so the URL starts with http://127.0.0.1:5500).");
+      return;
+    }
+
+    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+      alert("Camera API not available! The browser blocked the camera either because you are not on localhost/HTTPS, or your browser doesn't support it.");
+      return;
+    }
+
+    try {
+      videoStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: { ideal: 400 }, height: { ideal: 400 } } });
+      videoEl.srcObject = videoStream;
+      lensInner.classList.add('active');
+    } catch (err) {
+      console.error("Error accessing camera: ", err);
+      if (err.name === 'NotAllowedError' || err.name === 'PermissionDeniedError') {
+        alert("Camera Permission Denied! You previously blocked the camera for this website. Click the little lock/camera icon next to the URL bar at the top of your browser to allow access, then refresh the page.");
+      } else {
+        alert("Could not access camera. Error: " + err.message);
+      }
+    }
+  }
+
+  async function takePhoto() {
+    if (window.location.protocol === 'file:') {
+      alert("Camera Blocked:\nFor security reasons, your browser has blocked the webcam because you opened the HTML file directly on your PC.\n\nTo make it work, please open this file through 'Live Server' in VS Code.");
+      return;
+    }
+    if (!videoStream) {
+      // Start the camera for them if they just push the shutter
+      await startCamera();
+      if (!videoStream) return; // If permission denied or failed
+      // Wait a moment for stream to settle before snapping photo
+      await new Promise(r => setTimeout(r, 600));
+    }
+    
+    // Flash effect
+    flashEffect.classList.add('flash');
+    setTimeout(() => { flashEffect.classList.remove('flash'); }, 100);
+    
+    // Draw video frame to canvas
+    const ctx = canvasEl.getContext('2d');
+    
+    // Reverse the mirror effect for drawing (so image looks like what they saw)
+    ctx.translate(canvasEl.width, 0);
+    ctx.scale(-1, 1);
+    
+    const vWidth = videoEl.videoWidth || 400; // Fallback to 400 if 0
+    const vHeight = videoEl.videoHeight || 400;
+    let minDim = Math.min(vWidth, vHeight);
+    if (minDim === 0) minDim = 400; // Prevent crash if still 0
+    
+    const startX = (vWidth - minDim) / 2;
+    const startY = (vHeight - minDim) / 2;
+    
+    try {
+      ctx.drawImage(videoEl, startX, startY, minDim, minDim, 0, 0, canvasEl.width, canvasEl.height);
+    } catch (e) {
+      console.error("Error drawing image:", e);
+      // Let it continue so we at least print a black polaroid
+    }
+    
+    // Reset transform just in case
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
+    
+    const dataUrl = canvasEl.toDataURL('image/jpeg', 0.9);
+    
+    // Create new polaroid element
+    const newPol = document.createElement('div');
+    newPol.className = 'pol printed-pol bg-doodle';
+    
+    // Add randomness to final rotation
+    const rotation = (Math.random() * 30) - 15;
+    // Set custom prop for animation final state
+    newPol.style.setProperty('--print-rot', rotation + 'deg');
+    
+    // Store it so dragging works natively via data-b
+    newPol.setAttribute('data-b', rotation);
+    
+    newPol.innerHTML = \`
+      <div class="pol-img" style="overflow: hidden;">
+        <img src="\${dataUrl}" alt="My Polaroid" style="width:100%; height:100%; object-fit:cover;" draggable="false" />
+      </div>
+      <span class="pol-lbl">Guest</span>
+      <span class="pol-sub">Just now</span>
+    \`;
+    
+    // Insert into DOM
+    document.getElementById('cameraContainer').appendChild(newPol);
+    
+    // Trigger animation after brief delay
+    setTimeout(() => {
+      newPol.classList.add('anim-print');
+      
+      // Make draggable after animation finishes
+      setTimeout(() => {
+        newPol.style.animation = 'none';
+        newPol.style.transform = \`translateX(-50%) translateY(-260px) rotate(\${rotation}deg)\`;
+        makeDraggable(newPol);
+      }, 2500);
+    }, 100);
+  }
+</script>
+<!-- PHOTO BOOTH END -->
+
+
+      <!-- MODAL -->
+      <div class="mbg" id="modal">
+        <div class="mcard">
+          <button class="mclose" onclick="document.getElementById('modal').classList.remove('open')">âœ•</button>
+          <p class="mname">Saihaj Dheer</p>
+          <p class="mrole">UI/UX Designer &nbsp;âœ¦&nbsp; B.Design @ LPU</p>
+          <div>
+            <a class="mlink" href="https://www.linkedin.com/in/saihaj-dheer-192338297/" target="_blank">ðŸ”—
+              LinkedIn</a>
+            <a class="mlink" href="mailto:saihajdheer@gmail.com">âœ‰ Email</a>
+            <a class="mlink" id="modalResumeBtn" onclick="openResume()" href="#">ðŸ“„ Resume</a>
+
+            <p class="msec">Internships</p>
+            <div class="mexp">
+              <div class="mexp-title">Intern Designer â€” AYMUN</div>
+              <div class="mexp-org">Apeejay Youth Model United Nations</div>
+              <div class="mexp-date">Sep 2025 â€“ Nov 2025 Â· Punjab</div>
+              <div class="mexp-desc">Designed visually impactful creatives and promotional content to strengthen event
+                branding. Contributed to planning, organization, and execution of the AYMUN Conference.</div>
+            </div>
+            <div class="mexp">
+              <div class="mexp-title">Social Media Designer â€” ASMUN</div>
+              <div class="mexp-org">Apeejay Stya Model United Nations</div>
+              <div class="mexp-date">Jun 2025 â€“ Aug 2025 Â· Punjab</div>
+              <div class="mexp-desc">Created visually engaging design assets and promotional materials to build a
+                cohesive visual identity across all communications.</div>
+            </div>
+            <p class="msec">Projects</p>
+            <div class="mexp">
+              <div class="mexp-title">Helpsters</div>
+              <div class="mexp-org">UI/UX Designer</div>
+              <div class="mexp-date">Jan 2025 â€“ May 2025</div>
+              <div class="mexp-desc">A dyslexia-friendly digital application focused on accessible, clear, and inclusive
+                visual communication.</div>
+            </div>
+            <div class="mexp">
+              <div class="mexp-title">tiint Smartwatch</div>
+              <div class="mexp-org">UI/UX Designer</div>
+              <div class="mexp-date">Aug 2025 â€“ Nov 2025</div>
+              <div class="mexp-desc">Hybrid modular smartwatch concept blending analog emotion with digital utility.
+                Developed product concept, watch UI, mobile app, and design system through user research.</div>
+            </div>
+            <p class="msec">Education</p>
+            <div class="mexp">
+              <div class="mexp-title">B.Design (UI/UX) â€” 9.1 CGPA</div>
+              <div class="mexp-org">Lovely Professional University</div>
+              <div class="mexp-date">2023 â€“ Present Â· Phagwara, Punjab</div>
+            </div>
+            <p class="msec">Skills</p>
+            <div class="mtags">
+              <span class="mtag">Figma</span><span class="mtag">Adobe Photoshop</span>
+              <span class="mtag">Adobe Illustrator</span><span class="mtag">User Research</span>
+              <span class="mtag">Wireframing</span><span class="mtag">Usability Testing</span>
+              <span class="mtag">Branding</span><span class="mtag">Social Media Design</span>
+              <span class="mtag-blue mtag">Google UX Design (Coursera)</span>
+            </div>
+          </div>
+        </div>
+
+        <script>
+          /* â”€â”€ SMOOTH SCROLL HELPER â”€â”€ */
+          function scrollTo(id) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            /* offset for sticky nav height (~68px) */
+            var navH = 68;
+            var top = el.getBoundingClientRect().top + window.pageYOffset - navH;
+            window.scrollTo({ top: top, behavior: 'smooth' });
+          }
+
+          /* â”€â”€ RESUME OPEN â”€â”€ */
+          function openResume() {
+            window.open('assets/CV_202604040911586316_12301117.pdf', '_blank');
+          }
+
+          /* â”€â”€ SPLASH ANIMATION â”€â”€ */
+          window.addEventListener('load', function () {
+            var letters = document.querySelectorAll('.letter');
+            var sub = document.getElementById('splashSub');
+            var usvg = document.getElementById('usvg');
+            var upath = document.getElementById('upath');
+            var splash = document.getElementById('splash');
+            var main = document.getElementById('main');
+
+            letters.forEach(function (l, i) {
+              setTimeout(function () { l.classList.add('show'); }, 200 + i * 110);
+            });
+            var after = 200 + (letters.length - 1) * 110;
+
+            setTimeout(function () {
+              usvg.classList.add('vis');
+              var s = null;
+              (function anim(ts) {
+                if (!s) s = ts;
+                var p = Math.min((ts - s) / 700, 1);
+                upath.style.strokeDashoffset = String(560 * (1 - p));
+                if (p < 1) requestAnimationFrame(anim);
+              })(performance.now());
+            }, after + 200);
+
+            setTimeout(function () { sub.classList.add('show'); }, after + 420);
+
+            setTimeout(function () {
+              splash.style.opacity = '0';
+              setTimeout(function () {
+                splash.style.display = 'none';
+                main.style.display = 'block';
+              }, 700);
+            }, after + 1800);
+          });
+
+          /* â”€â”€ MODAL â”€â”€ */
+          window.openModal = function () { document.getElementById('modal').classList.add('open'); };
+          document.getElementById('modal').addEventListener('click', function (e) {
+            if (e.target === this) this.classList.remove('open');
+          });
+
+          /* â”€â”€ DRAGGABLE POLAROIDS â”€â”€ */
+          function makeDraggable(el) {
+            var drag = false, ox = 0, oy = 0, sl = 0, st = 0;
+            var base = parseFloat(el.getAttribute('data-b')) || 0;
+            el.addEventListener('mousedown', function (e) {
+              drag = true; el.style.animation = 'none'; el.style.zIndex = 50;
+              ox = e.clientX; oy = e.clientY; sl = el.offsetLeft; st = el.offsetTop;
+              e.preventDefault();
+            });
+            document.addEventListener('mousemove', function (e) {
+              if (!drag) return;
+              var dx = e.clientX - ox, dy = e.clientY - oy;
+              el.style.left = (sl + dx) + 'px'; el.style.top = (st + dy) + 'px';
+              el.style.right = 'auto'; el.style.bottom = 'auto';
+              el.style.transform = 'rotate(' + (base + dx * 0.04) + 'deg)';
+            });
+            document.addEventListener('mouseup', function () {
+              if (!drag) return; drag = false; el.style.zIndex = 5;
+              el.style.transform = 'rotate(' + base + 'deg)';
+            });
+          }
+          ['p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p8'].forEach(function (id) {
+            var el = document.getElementById(id); if (el) makeDraggable(el);
+          });
+        </script>
+</body>
+</html>

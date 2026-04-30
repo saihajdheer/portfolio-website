@@ -1,0 +1,2214 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;700;900&family=Caveat:wght@400;700&display=swap"
+    rel="stylesheet">
+  <title>Saihaj Dheer â€” UI/UX Designer</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #fdf9f6;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(160, 145, 130, 0.32) 1.2px, transparent 1.2px);
+      background-size: 28px 28px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* SPLASH */
+    #splash {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity .7s;
+    }
+
+    #splash.out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .name-row {
+      display: flex;
+      align-items: baseline;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .letter {
+      font-size: clamp(44px, 8vw, 88px);
+      font-weight: 900;
+      color: #1a1a1a;
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity .45s ease, transform .45s ease;
+      letter-spacing: -3px;
+      line-height: 1;
+    }
+
+    .letter.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .letter.pk {
+      color: #e8587a;
+    }
+
+    .sp-gap {
+      width: clamp(10px, 2vw, 22px);
+    }
+
+    #usvg {
+      display: block;
+      margin-top: -4px;
+      opacity: 0;
+      transition: opacity .3s;
+      position: relative;
+      z-index: 1;
+      max-width: 90vw;
+    }
+
+    #usvg.vis {
+      opacity: 1;
+    }
+
+    #upath {
+      stroke-dasharray: 560;
+      stroke-dashoffset: 560;
+    }
+
+    .splash-sub {
+      font-family: 'Caveat', cursive;
+      font-size: 18px;
+      color: #aaa;
+      margin-top: 14px;
+      letter-spacing: 2px;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity .5s, transform .5s;
+      position: relative;
+      z-index: 1;
+    }
+
+    .splash-sub.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    #main {
+      display: none;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* NAV */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 52px;
+      border-bottom: 1px solid rgba(180, 165, 150, 0.2);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: rgba(253, 249, 246, 0.93);
+      backdrop-filter: blur(10px);
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .logo-wrap img {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+      transform: scale(1.8);
+      transform-origin: left center;
+      margin-right: 30px;
+    }
+
+    .logo-name {
+      font-family: 'Caveat', cursive;
+      font-size: 17px;
+      color: #555;
+      letter-spacing: 1px;
+      font-weight: 700;
+    }
+
+    .navlinks {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+
+    .navlinks a {
+      text-decoration: none;
+      font-size: 13px;
+      color: #888;
+      transition: color .2s;
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .navlinks a:hover {
+      color: #1a1a1a;
+    }
+
+    .navbtn {
+      background: #e8587a;
+      color: #fff;
+      border: none;
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: background .2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .navbtn:hover {
+      background: #c9385e;
+    }
+
+    /* HELLO POPUP */
+    .hello-popup {
+      position: absolute;
+      top: calc(100% + 12px);
+      right: 0;
+      background: #fff;
+      border-radius: 12px;
+      padding: 18px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      border: 1px solid rgba(180, 165, 150, 0.2);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-width: 260px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: opacity 0.2s, transform 0.2s, visibility 0.2s;
+      z-index: 100;
+      cursor: auto;
+    }
+
+    .hello-popup.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    
+    .hp-email {
+      font-size: 15px;
+      font-weight: 600;
+      color: #1a1a1a;
+      text-align: center;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(180, 165, 150, 0.12);
+    }
+
+    .hp-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .hp-action {
+      flex: 1;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      transition: background 0.2s;
+      border: none;
+      background: #f5f0ea;
+      color: #555;
+    }
+
+    .hp-action:hover {
+      background: #e8e2db;
+    }
+
+    .hp-action.hp-primary {
+      background: #1a1a1a;
+      color: #fff;
+    }
+
+    .hp-action.hp-primary:hover {
+      background: #333;
+    }
+
+    /* HERO */
+    #home {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 24px 30px;
+      min-height: 680px;
+    }
+
+    .hero-title {
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      margin-bottom: 10px;
+    }
+
+    .hero-title .sub {
+      font-family: 'Caveat', cursive;
+      font-size: 17px;
+      color: #bbb;
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .hero-title h1 {
+      font-size: clamp(20px, 3vw, 38px);
+      font-weight: 900;
+      color: #1a1a1a;
+      letter-spacing: -1.5px;
+      line-height: 1.15;
+    }
+
+    .hero-title h1 .pk {
+      color: #e8587a;
+    }
+
+    .scene {
+      position: relative;
+      width: 100%;
+      max-width: 1080px;
+      height: 540px;
+      z-index: 2;
+      margin: 0 auto;
+    }
+
+    .center-photo {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      transform: translateX(-50%);
+      width: 260px;
+      height: auto;
+      z-index: 10;
+    }
+
+    .center-photo img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .photo-hint {
+      display: none;
+    }
+
+    .pol {
+      position: absolute;
+      background: #fff;
+      padding: 8px 8px 2px;
+      border-radius: 3px;
+      box-shadow: 0 3px 16px rgba(0, 0, 0, .09);
+      cursor: grab;
+      user-select: none;
+      z-index: 5;
+      width: 122px;
+      transition: box-shadow .2s;
+    }
+
+    .pol:hover {
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .15);
+      z-index: 15;
+    }
+
+    .pol:active {
+      cursor: grabbing;
+    }
+
+    .pol-img {
+      width: 100%;
+      height: 110px;
+      border-radius: 2px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px;
+      overflow: hidden;
+    }
+
+    .pol-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .pol-lbl {
+      font-family: 'Caveat', cursive;
+      font-size: 13px;
+      font-weight: 700;
+      color: #333;
+      text-align: center;
+      display: block;
+      margin-top: 4px;
+    }
+
+    .pol-sub {
+      font-family: 'Caveat', cursive;
+      font-size: 10px;
+      color: #bbb;
+      text-align: center;
+      display: block;
+    }
+
+    @keyframes sw {
+
+      0%,
+      100% {
+        transform: rotate(var(--r));
+      }
+
+      50% {
+        transform: rotate(calc(var(--r)+2deg)) translateY(-4px);
+      }
+    }
+
+    .sa {
+      animation: sw 3.2s ease-in-out infinite;
+    }
+
+    .sb {
+      animation: sw 3.8s ease-in-out infinite reverse;
+    }
+
+    .sc {
+      animation: sw 2.9s ease-in-out infinite .4s;
+    }
+
+    .bg-swim {
+      background: #dbeafe;
+    }
+
+    .bg-coffee {
+      background: #fef9c3;
+    }
+
+    .bg-travel {
+      background: #d1fae5;
+    }
+
+    .bg-food {
+      background: #fce7f3;
+    }
+
+    .bg-doodle {
+      background: #ede9fe;
+    }
+
+    .bg-sky {
+      background: #e0f2fe;
+    }
+
+    .bg-shop {
+      background: #fce7f3;
+    }
+
+    .bg-uxd {
+      background: #d1fae5;
+    }
+
+    /* PROJECTS */
+    #projects {
+      padding: 80px 52px 80px;
+      border-top: 1px solid rgba(180, 165, 150, 0.12);
+    }
+
+    .projects-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      max-width: 860px;
+      margin: 0 auto 52px;
+    }
+
+    .projects-header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .proj-icon {
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: #f5f0ea;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      border: 1px solid rgba(180, 165, 150, 0.2);
+    }
+
+    .proj-title {
+      font-size: 24px;
+      font-weight: 900;
+      color: #1a1a1a;
+      letter-spacing: -0.5px;
+    }
+
+    .proj-sub {
+      font-size: 13px;
+      color: #aaa;
+      margin-top: 2px;
+      font-style: italic;
+    }
+
+    .see-all-btn {
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      padding: 12px 26px;
+      border-radius: 50px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: background .2s;
+    }
+
+    .see-all-btn:hover {
+      background: #333;
+    }
+
+    .projects-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 52px;
+      max-width: 1080px;
+      margin: 0 auto;
+      padding-bottom: 40px;
+    }
+
+    .project-banner {
+      display: block;
+      width: 100%;
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.08);
+      position: relative;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      background: #fff;
+    }
+
+    .project-banner:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.15);
+    }
+
+    .pb-cover-wrap {
+      width: 100%;
+      aspect-ratio: 2300 / 952;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .pb-cover-wrap > img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .pb-cover-wrap .pb-hover {
+      opacity: 0;
+      transform: scale(1.02);
+      z-index: 2;
+    }
+
+    .pb-cover-wrap .pb-base {
+      z-index: 1;
+      transform: scale(1);
+    }
+
+    .project-banner:hover .pb-cover-wrap .pb-hover {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .project-banner:hover .pb-cover-wrap .pb-base {
+      opacity: 0;
+      transform: scale(0.98);
+    }
+
+    .other-projects-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .pb-portrait-wrap {
+      width: 100%;
+      aspect-ratio: 1434 / 1571;
+      background: #f5f0ea;
+      display: flex;
+    }
+
+    .pb-portrait-wrap > img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .project-banner:hover .pb-portrait-wrap > img {
+      transform: scale(1.04);
+    }
+
+    /* ABOUT */
+    #about {
+      padding: 80px 52px 100px;
+      border-top: 1px solid rgba(180, 165, 150, 0.12);
+    }
+
+    .about-inner {
+      max-width: 980px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 70px;
+      align-items: center;
+    }
+
+    .photo-card {
+      background: #1a1a1a;
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      transform: rotate(-3deg);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, .2);
+      transition: transform .4s ease;
+    }
+
+    .photo-card:hover {
+      transform: rotate(0deg) scale(1.02);
+    }
+
+    .photo-card .pc-img {
+      width: 100%;
+      aspect-ratio: .78;
+      object-fit: cover;
+      object-position: center top;
+      display: block;
+      filter: grayscale(15%);
+    }
+
+    .photo-card-footer {
+      padding: 14px 18px 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .pc-name {
+      font-size: 15px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .pc-connect {
+      background: #fff;
+      color: #1a1a1a;
+      border: none;
+      border-radius: 50px;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: background .2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .pc-connect:hover {
+      background: #e8f4ff;
+    }
+
+    .pc-linkedin {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 4px 18px 16px;
+    }
+
+    .pc-li-link {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      width: 100%;
+    }
+
+    .pc-li-dot {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #e8587a;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      color: #fff;
+      flex-shrink: 0;
+    }
+
+    .pc-li-txt {
+      font-size: 11px;
+      color: #888;
+      transition: color .2s;
+    }
+
+    .pc-li-txt span {
+      color: #bbb;
+      font-weight: 500;
+      transition: color .2s;
+    }
+
+    .pc-li-link:hover .pc-li-txt {
+      color: #aaa;
+    }
+
+    .pc-li-link:hover .pc-li-txt span {
+      color: #fff;
+    }
+
+    .about-big {
+      font-size: clamp(26px, 3.2vw, 44px);
+      font-weight: 800;
+      color: #1a1a1a;
+      line-height: 1.22;
+      letter-spacing: -1.5px;
+      margin-bottom: 32px;
+    }
+
+    .about-big .pk {
+      color: #e8587a;
+    }
+
+    .mini-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: #f5f0ea;
+      border-radius: 8px;
+      padding: 3px 10px;
+      font-size: 12px;
+      vertical-align: middle;
+      margin: 0 3px;
+      border: 1px solid rgba(180, 165, 150, 0.28);
+      font-family: 'Caveat', cursive;
+      font-weight: 700;
+      color: #555;
+      white-space: nowrap;
+    }
+
+    .about-ctas {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .cta-res {
+      background: transparent;
+      color: #1a1a1a;
+      border: 1.5px solid #ccc;
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: border-color .2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .cta-res:hover {
+      border-color: #888;
+    }
+
+    .cta-abt {
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      padding: 12px 28px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      transition: background .2s;
+    }
+
+    .cta-abt:hover {
+      background: #333;
+    }
+
+    /* MODAL */
+    .mbg {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .42);
+      z-index: 200;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .mbg.open {
+      display: flex;
+    }
+
+    .mcard {
+      background: #fdf9f6;
+      border-radius: 24px;
+      padding: 40px;
+      max-width: 480px;
+      width: 92%;
+      position: relative;
+      border: 1px solid #f0e8df;
+      max-height: 88vh;
+      overflow-y: auto;
+    }
+
+    .mclose {
+      position: absolute;
+      top: 16px;
+      right: 18px;
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      color: #bbb;
+    }
+
+    .mname {
+      font-size: 28px;
+      font-weight: 900;
+      color: #1a1a1a;
+      letter-spacing: -1px;
+      margin-bottom: 2px;
+    }
+
+    .mrole {
+      font-family: 'Caveat', cursive;
+      font-size: 17px;
+      color: #e8587a;
+      margin-bottom: 18px;
+    }
+
+    .msec {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: #bbb;
+      margin: 18px 0 10px;
+    }
+
+    .mexp {
+      margin-bottom: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #f5ede8;
+    }
+
+    .mexp:last-child {
+      border-bottom: none;
+    }
+
+    .mexp-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: #1a1a1a;
+    }
+
+    .mexp-org {
+      font-size: 12px;
+      color: #e8587a;
+      margin-top: 1px;
+    }
+
+    .mexp-date {
+      font-size: 11px;
+      color: #bbb;
+      margin-top: 1px;
+    }
+
+    .mexp-desc {
+      font-size: 12px;
+      color: #666;
+      line-height: 1.6;
+      margin-top: 5px;
+    }
+
+    .mtags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 10px;
+    }
+
+    .mtag {
+      background: #fce7f3;
+      color: #9d174d;
+      border-radius: 50px;
+      padding: 4px 12px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    .mtag-blue {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .mlink {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      background: #f5f0ea;
+      border-radius: 50px;
+      padding: 8px 16px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #1a1a1a;
+      margin-top: 8px;
+      margin-right: 8px;
+      transition: background .2s;
+      border: 1px solid rgba(180, 165, 150, 0.2);
+    }
+
+    .mlink:hover {
+      background: #ede8e0;
+    }
+
+    /* MOBILE OPTIMIZATIONS */
+    @media (max-width: 768px) {
+      /* Typography */
+      .letter { font-size: 14vw; }
+      .about-big { font-size: 24px; }
+      .about-me-headline { font-size: 24px; }
+      
+      /* Navigation */
+      nav { padding: 12px 20px; }
+      .logo-wrap img { margin-right: 10px; transform: scale(1.4); }
+      .navlinks { display: none; /* Hide nav links on very small screens to save space */ }
+      
+      /* Hero Section */
+      #home { padding: 20px 16px 30px; min-height: auto; }
+      .hero-title h1 { font-size: 28px; }
+      .scene { height: 420px; }
+      .center-photo { width: 200px; }
+      .pol { transform: scale(0.8) !important; }
+      
+      /* Projects */
+      #projects { padding: 60px 20px; }
+      .projects-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .projects-grid { gap: 32px; }
+      .pb-cover-wrap { aspect-ratio: auto; height: 300px; }
+      
+      /* About */
+      #about { padding: 60px 20px; }
+      .about-inner { grid-template-columns: 1fr; gap: 40px; }
+      .photo-card { max-width: 320px; margin: 0 auto; }
+      
+      /* Photobooth */
+      #photobooth { padding: 60px 20px 80px; }
+      .pb-main-row { flex-direction: column; }
+      .pb-strip { flex-direction: row; flex-wrap: wrap; justify-content: center; transform: none !important; }
+      .pb-cam-wrap { transform: scale(0.9); transform-origin: top center; margin-bottom: 20px; }
+      .pb-drag-tip { font-size: 14px; }
+      
+      /* Footer */
+      .site-footer { padding: 60px 20px 40px; }
+      .footer-quirk { font-size: 22px; }
+      .social-links { gap: 12px; flex-wrap: wrap; justify-content: center; }
+      
+      /* Modal */
+      .mcard { padding: 24px; }
+      .mname { font-size: 24px; }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- SPLASH -->
+  <div id="splash">
+    <div class="name-row">
+      <span class="letter" data-i="0">S</span><span class="letter pk" data-i="1">A</span>
+      <span class="letter" data-i="2">I</span><span class="letter pk" data-i="3">H</span>
+      <span class="letter" data-i="4">A</span><span class="letter" data-i="5">J</span>
+      <span class="sp-gap"></span>
+      <span class="letter" data-i="6">D</span><span class="letter pk" data-i="7">H</span>
+      <span class="letter" data-i="8">E</span><span class="letter" data-i="9">E</span>
+      <span class="letter pk" data-i="10">R</span>
+    </div>
+    <svg id="usvg" width="560" height="22" viewBox="0 0 560 22">
+      <path id="upath" d="M20 14 Q280 4 540 14" stroke="#e8587a" stroke-width="3.5" stroke-linecap="round"
+        fill="none" />
+    </svg>
+    <p class="splash-sub" id="splashSub">ui/ux designer &nbsp;Â·&nbsp; crafting purposeful experiences</p>
+  </div>
+
+  <div id="main">
+
+    <nav>
+      <!-- Logo â†’ scroll to top -->
+      <a class="logo-wrap" href="#home" style="text-decoration:none; color:inherit;">
+        <img src="assets/Saihaj%20logo.png" alt="Saihaj Dheer">
+        <span class="logo-name">Saihaj Dheer</span></a>
+      <ul class="navlinks">
+        <!-- Home â†’ scroll to top -->
+        <li><a href="#home">Home</a></li>
+        <!-- Projects â†’ scroll to projects section -->
+        <li><a href="#projects">Projects</a></li>
+        <!-- Resume â†’ opens PDF download -->
+        <li><a id="resumeNavLink" onclick="openResume()" style="cursor: pointer;">Resume</a></li>
+        <!-- About â†’ scroll to about section -->
+        <li><a href="#about">About</a></li>
+      </ul>
+      <!-- Say hello popup -->
+      <div class="hello-wrap" style="position: relative;">
+        <button class="navbtn" id="helloBtn" onclick="toggleHelloPopup(event)">Say hello</button>
+        <div class="hello-popup" id="helloPopup">
+          <div class="hp-email">saihajdheer@gmail.com</div>
+          <div class="hp-actions">
+            <button class="hp-action" id="hpCopyBtn" onclick="copyHelloEmail()">Copy</button>
+            <a href="mailto:saihajdheer@gmail.com" class="hp-action hp-primary">Open in email</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- HERO â€” id="home" so nav scrolls here -->
+    <div id="home">
+      <div class="hero-title">
+        <span class="sub">hello world, i'm saihaj dheer</span>
+        <h1>Crafting <span class="pk">Human-First</span> &amp; Meaningful Digital Experiences</h1>
+      </div>
+      <div class="scene" id="scene">
+        <div class="center-photo" id="centerCard">
+          <img src="assets/image 47.png" alt="Saihaj Dheer" style="width:100%;height:auto;display:block;" />
+          <div class="photo-hint">tap to know me âœ¦</div>
+        </div>
+        <div class="pol sa" id="p1" style="top:20px;left:200px;--r:6deg;transform:rotate(6deg)" data-b="6">
+          <div class="pol-img bg-uxd"><img src="assets/ui%20ux%20design.jpg" alt="UI/UX Design" style="width:100%;height:100%;object-fit:cover;display:block;"></div><span class="pol-lbl">UI/UX Design</span><span class="pol-sub">it's not work, it's life</span>
+        </div>
+        <div class="pol sb" id="p8" style="top:190px;left:160px;--r:4deg;transform:rotate(4deg)" data-b="4">
+          <div class="pol-img bg-food"><img src="assets/bake.jpg" alt="Baking"></div><span class="pol-lbl">Baking</span><span class="pol-sub">sweet creations</span>
+        </div>
+        <div class="pol sc" id="p2" style="bottom:80px;left:20px;--r:-5deg;transform:rotate(-5deg)" data-b="-5">
+          <div class="pol-img bg-coffee"><img src="assets/ICE%20CREAM%20LOVER.jpeg" alt="Ice Cream" style="width:100%;height:100%;object-fit:cover;display:block;"></div><span class="pol-lbl" style="font-size: 11px; line-height: 1.1; margin-top: 2px;">Certified Ice<br>cream lover</span><span class="pol-sub">sweet tooth</span>
+        </div>
+        <div class="pol sa" id="p6" style="bottom:0px;left:170px;--r:4deg;transform:rotate(4deg)" data-b="4">
+          <div class="pol-img bg-sky"><img src="assets/sky%20lover.jpeg" alt="Sky Lover"></div><span class="pol-lbl">Sky Lover</span><span class="pol-sub">clouds
+            &gt; people</span>
+        </div>
+        <div class="pol sb" id="p5" style="top:30px;right:190px;--r:7deg;transform:rotate(7deg)" data-b="7">
+          <div class="pol-img bg-doodle"><img src="assets/Doodle.jpeg" alt="Doodling"></div><span class="pol-lbl">Doodling</span><span class="pol-sub">line art
+            nerd</span>
+        </div>
+        <div class="pol sc" id="p7" style="top:200px;right:50px;--r:-5deg;transform:rotate(-5deg)" data-b="-5">
+          <div class="pol-img bg-uxd"><video src="assets/study%20table.mp4" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video></div><span class="pol-lbl">Study Table</span><span class="pol-sub">where i cook design</span>
+        </div>
+        <div class="pol sa" id="p4" style="bottom:150px;right:230px;--r:-6deg;transform:rotate(-6deg)" data-b="-6">
+          <div class="pol-img bg-food"><img src="assets/foodie.jpeg" alt="Foodie"></div><span class="pol-lbl">Foodie</span><span class="pol-sub">plates over
+            deadlines</span>
+        </div>
+        <div class="pol sb" id="p3" style="bottom:30px;right:60px;--r:-4deg;transform:rotate(-4deg)" data-b="-4">
+          <div class="pol-img bg-travel"><video src="assets/NATURE.mp4" autoplay loop muted playsinline style="width:100%;height:100%;object-fit:cover;display:block;"></video></div><span class="pol-lbl">Nature Lover</span><span class="pol-sub">into the wild</span>
+        </div>
+      </div>
+
+      <!-- SKILLS MARQUEE -->
+      <style>
+        .skills-marquee-wrap {
+          width: 100vw;
+          overflow: hidden;
+          background: #1a1a1a;
+          padding: 12px 0;
+          margin-top: 0px;
+          margin-bottom: 20px;
+          position: relative;
+          align-self: center;
+          flex-shrink: 0;
+          z-index: 20;
+          box-shadow: 0 16px 40px rgba(0,0,0,0.15);
+        }
+
+        .skills-marquee {
+          display: flex;
+          width: max-content;
+          animation: scroll-marquee 25s linear infinite;
+        }
+
+        .skills-marquee-content {
+          display: flex;
+          align-items: center;
+          gap: 32px;
+          padding-right: 32px;
+        }
+
+        .skills-marquee-content span {
+          display: inline-flex;
+          align-items: center;
+          font-family: 'Inter', sans-serif;
+          font-weight: 700;
+          font-size: 13.5px;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          color: #fff;
+        }
+
+        .skills-marquee-content .star {
+          color: #e8587a;
+          font-size: 12px;
+        }
+
+        @keyframes scroll-marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+      </style>
+
+      <div class="skills-marquee-wrap">
+        <div class="skills-marquee">
+          <div class="skills-marquee-content">
+            <span>Figma</span><span class="star">✦</span>
+            <span>Adobe Photoshop</span><span class="star">✦</span>
+            <span>Adobe Illustrator</span><span class="star">✦</span>
+            <span>Wireframing</span><span class="star">✦</span>
+            <span>User Research</span><span class="star">✦</span>
+            <span>Prototyping</span><span class="star">✦</span>
+            <span>UI/UX Design</span><span class="star">✦</span>
+            <span>Figma</span><span class="star">✦</span>
+            <span>Adobe Photoshop</span><span class="star">✦</span>
+            <span>Adobe Illustrator</span><span class="star">✦</span>
+            <span>Wireframing</span><span class="star">✦</span>
+            <span>User Research</span><span class="star">✦</span>
+            <span>Prototyping</span><span class="star">✦</span>
+            <span>UI/UX Design</span><span class="star">✦</span>
+          </div>
+          <div class="skills-marquee-content" aria-hidden="true">
+            <span>Figma</span><span class="star">✦</span>
+            <span>Adobe Photoshop</span><span class="star">✦</span>
+            <span>Adobe Illustrator</span><span class="star">✦</span>
+            <span>Wireframing</span><span class="star">✦</span>
+            <span>User Research</span><span class="star">✦</span>
+            <span>Prototyping</span><span class="star">✦</span>
+            <span>UI/UX Design</span><span class="star">✦</span>
+            <span>Figma</span><span class="star">✦</span>
+            <span>Adobe Photoshop</span><span class="star">✦</span>
+            <span>Adobe Illustrator</span><span class="star">✦</span>
+            <span>Wireframing</span><span class="star">✦</span>
+            <span>User Research</span><span class="star">✦</span>
+            <span>Prototyping</span><span class="star">✦</span>
+            <span>UI/UX Design</span><span class="star">✦</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PROJECTS â€” id="projects" -->
+    <div id="projects">
+      <div class="projects-header">
+        <div class="projects-header-left">
+          <div class="proj-icon">ðŸ—‚</div>
+          <div>
+            <div class="proj-title">Featured Projects</div>
+            <div class="proj-sub">Blood, sweat, and pixels.</div>
+          </div>
+        </div>
+        <button class="see-all-btn" onclick="openModal()">See All â†—</button>
+      </div>
+            <div class="projects-grid">
+        
+        <!-- DyslexAI Project Banner -->
+        <a href="https://www.behance.net/gallery/227347757/Homework-helping-app-for-Kids" target="_blank" rel="noopener noreferrer" class="project-banner">
+          <div class="pb-cover-wrap">
+            <img src="assets/dyslexia hover.png" class="pb-hover" alt="DyslexAI Hover Elements">
+            <img src="assets/dyslexia cover.png" class="pb-base" alt="DyslexAI App">
+          </div>
+        </a>
+
+        <!-- ASMUN Project Banner -->
+        <a href="https://www.behance.net/gallery/239169601/ASMUN-Visual-Identity-Social-Media-Creatives" target="_blank" rel="noopener noreferrer" class="project-banner">
+          <div class="pb-cover-wrap">
+            <img src="assets/asmun hover.png" class="pb-hover" alt="ASMUN Hover Elements">
+            <img src="assets/asmun cover.png" class="pb-base" alt="ASMUN Branding">
+          </div>
+        </a>
+
+
+
+      </div>
+    </div>
+<!-- ABOUT â€” id="about" -->
+<style>
+  .animated-sticker {
+    display: inline-block;
+    background: #f8f8f8;
+    padding: 4px 10px;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    vertical-align: middle;
+    font-size: 24px;
+    animation: float-sticker 3.5s ease-in-out infinite;
+    border: 1px solid #eaeaea;
+    margin: 0 4px;
+    line-height: 1;
+  }
+  .sticker-1 { animation-delay: 0s; }
+  .sticker-2 { animation-delay: 1s; padding: 4px 8px; }
+  .sticker-3 { animation-delay: 2s; background: transparent; box-shadow: none; border: none; font-size: 32px; margin-top: -10px; }
+  @keyframes float-sticker {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-8px) rotate(4deg); }
+  }
+  .about-me-headline {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(28px, 3vw, 42px);
+    font-weight: 500;
+    line-height: 1.5;
+    color: #111;
+    letter-spacing: -0.5px;
+  }
+  .photo-card {
+    background: #fff !important;
+    padding: 15px 15px 20px 15px !important;
+    border-radius: 16px !important;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.06) !important;
+    transform: rotate(-3deg) !important;
+    transition: transform 0.4s ease !important;
+    border: 1px solid #f0f0f0 !important;
+  }
+  .photo-card:hover {
+    transform: rotate(0deg) scale(1.02) !important;
+  }
+  .photo-card .pc-img {
+    width: 100% !important;
+    aspect-ratio: 0.8 !important;
+    object-fit: cover !important;
+    object-position: center 20% !important;
+    border-radius: 12px !important;
+    filter: none !important;
+  }
+  .photo-card-text {
+    display: none !important;
+  }
+  .photo-card-footer {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    margin-top: 15px !important;
+    padding: 0 5px !important;
+  }
+  .pc-handle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .pc-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  .pc-handle-txt h4 {
+    font-size: 13px;
+    font-weight: 700;
+    color: #111;
+    margin: 0 0 2px 0;
+  }
+  .pc-handle-txt p {
+    font-size: 11px;
+    color: #888;
+    margin: 0;
+  }
+  .pc-connect {
+    background: #111 !important;
+    color: #fff !important;
+    padding: 8px 16px !important;
+    border-radius: 20px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    transition: background 0.2s, transform 0.2s !important;
+  }
+  .pc-connect:hover {
+    background: #333 !important;
+    transform: translateY(-2px) !important;
+  }
+  .resume-btn {
+    background: #ec4899; 
+    color: white;
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-weight: 500;
+    font-size: 16px;
+    transition: transform 0.2s;
+    box-shadow: 0 10px 20px rgba(236, 72, 153, 0.2);
+  }
+  .resume-btn:hover {
+    transform: translateY(-2px);
+  }
+  .about-btn {
+    background: #222;
+    color: white;
+    padding: 14px 28px;
+    border-radius: 30px;
+    font-weight: 500;
+    font-size: 16px;
+    transition: transform 0.2s;
+  }
+  .about-btn:hover {
+    transform: translateY(-2px);
+  }
+</style>
+
+<div id="about">
+  <div class="about-inner">
+    <div class="photo-card">
+      <img class="pc-img" src="assets/saihaj about me image.jpeg" alt="Saihaj Dheer">
+      <div class="photo-card-text" style="display:none;"></div>
+      <div class="photo-card-footer">
+        <div class="pc-handle">
+          <img class="pc-avatar" src="assets/saihaj about me image.jpeg" alt="Avatar">
+          <div class="pc-handle-txt">
+            <h4>@saihaj-dheer</h4>
+            <p>Linkedin</p>
+          </div>
+        </div>
+        <a href="https://www.linkedin.com/in/saihaj-dheer-192338297/" target="_blank" class="pc-connect">+ Connect</a>
+      </div>
+    </div>
+    
+    <div class="about-text">
+      <p class="about-me-headline">
+        I am Saihaj, a <span style="white-space: nowrap;">UI/U<span style="position: relative; z-index: 2;">X</span><img src="assets/laptop sticker 1.png" class="animated-sticker sticker-1" style="height: 90px; padding: 0; background: transparent; border: none; box-shadow: none; margin: -30px -10px -30px -35px; position: relative; z-index: 1; vertical-align: middle;"> Design</span> student passionate about creating visual identities <span class="animated-sticker sticker-2">&#x1F3A8;</span> and digital experiences <span class="animated-sticker sticker-3">&#x2728;</span>
+      </p>
+      
+      <div style="margin-top: 30px; display: flex; gap: 15px; flex-wrap: wrap;">
+        <a href="assets/CV_202604040911586316_12301117.pdf" target="_blank" class="resume-btn" style="text-decoration:none;">Resume</a>
+        <a href="#projects" class="about-btn" style="text-decoration:none;">About Me</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- PHOTO BOOTH -->
+<style>
+/* ═══════════════════════════════════════════════
+   PHOTO BOOTH — camera center, polaroid covers camera, drag stickers from sides
+═══════════════════════════════════════════════ */
+#photobooth {
+  padding: 80px 32px 120px;
+  display: flex; flex-direction: column; align-items: center;
+  border-top: 1px solid rgba(180,165,150,0.12);
+  position: relative;
+}
+.pb-title { text-align: center; margin-bottom: 52px; }
+.pb-title h2 { font-family:'Inter',sans-serif; font-size:clamp(28px,4vw,42px); font-weight:900; color:#1a1a1a; letter-spacing:-1px; }
+.pb-title p { font-family:'Caveat',cursive; font-size:20px; color:#888; margin-top:8px; }
+
+/* ── MAIN ROW: [strip] [camera+polaroid] [strip] ── */
+.pb-main-row {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  position: relative;
+}
+
+/* ── STICKER STRIPS (sides) ── */
+.pb-strip {
+  display: flex; flex-direction: column; gap: 14px; align-items: center;
+  opacity: 0; pointer-events: none;
+  transform: translateX(0);
+  transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.34,1.56,0.64,1);
+}
+.pb-strip.left  { transform: translateX(-20px); }
+.pb-strip.right { transform: translateX(20px); }
+.pb-strip.visible { opacity: 1; pointer-events: auto; transform: translateX(0); }
+
+.pb-sticker-chip {
+  width: 80px; height: 80px;
+  background: #fff; border-radius: 18px; padding: 10px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  cursor: grab; user-select: none;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px solid transparent;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+.pb-sticker-chip:hover { transform: scale(1.12) rotate(-4deg); box-shadow: 0 8px 24px rgba(0,0,0,0.13); border-color: #f4d0d8; }
+.pb-sticker-chip:active { cursor: grabbing; transform: scale(1.05); }
+.pb-sticker-chip img { width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+.pb-strip-label { font-family:'Caveat',cursive; font-size:13px; color:#bbb; text-align:center; }
+
+/* ── CAMERA WRAP (position: relative — polaroid is absolute inside) ── */
+.pb-cam-wrap {
+  position: relative;
+  width: 320px; height: 380px;
+  flex-shrink: 0;
+}
+
+/* ── CAMERA BODY ── */
+.pb-cam-body {
+  position: absolute; inset: 0;
+  background: #f4d0d8; border-radius: 64px;
+  box-shadow: 0 30px 50px rgba(0,0,0,0.12),
+    inset 4px 4px 10px rgba(255,255,255,0.7),
+    inset -4px -4px 15px rgba(0,0,0,0.05);
+}
+.pb-slot {
+  position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 220px; height: 12px; background: #111;
+  border-radius: 0 0 6px 6px; box-shadow: inset 0 -4px 6px rgba(0,0,0,0.8); z-index: 11;
+}
+.pb-flash {
+  position: absolute; top: 35px; left: 105px;
+  width: 34px; height: 70px;
+  background: repeating-linear-gradient(180deg,#e4e4e4,#e4e4e4 2px,#cdcdcd 2px,#cdcdcd 4px);
+  border-radius: 17px; border: 4px solid #fdf1f3;
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.1); z-index: 12;
+}
+.pb-viewfinder {
+  position: absolute; top: 40px; left: 45px;
+  width: 28px; height: 28px; background: #111; border-radius: 6px;
+  box-shadow: inset 0 4px 6px rgba(0,0,0,0.8), 0 2px 2px rgba(255,255,255,0.8);
+  display: flex; align-items: center; justify-content: center; z-index: 12;
+}
+.pb-vf-dot { width: 10px; height: 10px; background: #333; border-radius: 2px; }
+.pb-sensor-1, .pb-sensor-2 {
+  position: absolute; width: 14px; height: 14px; background: #111; border-radius: 50%;
+  box-shadow: inset 0 3px 6px rgba(0,0,0,0.9); z-index: 12;
+}
+.pb-sensor-1 { top: 40px; left: 165px; }
+.pb-sensor-2 { top: 65px; left: 165px; }
+.pb-brand {
+  position: absolute; top: 45px; right: 40px;
+  color: #d19ba5; font-family:'Inter',sans-serif; font-weight:700; font-size:32px;
+  letter-spacing:-1px; text-align:right; line-height:1;
+  text-shadow: 1px 1px 0 rgba(255,255,255,0.5); z-index:12;
+}
+.pb-brand span { display:block; font-size:11px; font-weight:800; letter-spacing:1px; margin-bottom:2px; }
+.pb-lens-outer {
+  position: absolute; bottom: 25px; left: 50%; transform: translateX(-50%);
+  width: 230px; height: 230px; background: #f4d0d8; border-radius: 50%;
+  box-shadow: 0 15px 25px rgba(0,0,0,0.15), inset 0 4px 8px rgba(255,255,255,0.6);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; z-index: 15;
+}
+.pb-lens-outer:hover {
+  transform: translateX(-50%) scale(1.02);
+  box-shadow: 0 20px 30px rgba(0,0,0,0.2), inset 0 4px 8px rgba(255,255,255,0.6);
+}
+.pb-lens-mid {
+  width: 170px; height: 170px; background: #f5d4dc; border-radius: 50%;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+  display: flex; align-items: center; justify-content: center; position: relative;
+}
+.pb-selfie {
+  position: absolute; left: 12px; top: 50%; transform: translateY(-50%);
+  width: 12px; height: 20px; background: #fdfdfd; border-radius: 6px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2); z-index: 16;
+}
+.pb-lens-inner {
+  width: 90px; height: 90px; background: #000; border-radius: 50%; overflow: hidden;
+  box-shadow: inset 0 0 30px rgba(0,0,0,0.9), 0 0 0 6px #1a1a1a, 0 0 0 8px #f4d0d8;
+  display: flex; align-items: center; justify-content: center; position: relative; z-index: 15;
+}
+.pb-lens-inner video { width:100%; height:100%; object-fit:cover; display:none; transform:scaleX(-1); }
+.pb-lens-inner.active video { display: block; }
+.pb-lens-txt {
+  position: absolute; z-index: 2; color: rgba(255,255,255,0.6);
+  pointer-events: none; display: flex; flex-direction: column;
+  align-items: center; gap: 4px; font-weight: bold; font-size: 10px; font-family:'Inter',sans-serif;
+}
+.pb-lens-txt svg { width:20px; height:20px; stroke:rgba(255,255,255,0.6); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.pb-lens-inner.active .pb-lens-txt { display: none; }
+.pb-shutter {
+  position: absolute; top: 150px; left: 20px;
+  width: 44px; height: 44px; background: #f7d5dc; border-radius: 50%;
+  box-shadow: inset 0 4px 6px rgba(255,255,255,0.8), inset 0 -2px 4px rgba(0,0,0,0.1),
+    0 4px 6px rgba(0,0,0,0.1), 0 0 0 5px #edb8c4;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: transform 0.1s, box-shadow 0.1s; user-select: none; z-index: 12;
+}
+.pb-shutter::after { content:''; width:32px; height:32px; background:#fce2e7; border-radius:50%; box-shadow:0 2px 4px rgba(0,0,0,0.1); }
+.pb-shutter:active { transform: scale(0.93); box-shadow: inset 0 2px 6px rgba(0,0,0,0.12), 0 0 0 5px #edb8c4; }
+
+/* ── POLAROID — absolute inside cam-wrap, ejects from slot, covers camera ── */
+.pb-polaroid {
+  position: absolute;
+  top: 5px;              /* final: covers camera, 5px from top */
+  left: 50%;
+  width: 290px;
+  background: #fff;
+  padding: 10px 10px 48px 10px;
+  border-radius: 3px;
+  transform: translateX(-50%) translateY(-360px);  /* start: above camera at slot */
+  opacity: 0;
+  z-index: 40;
+  pointer-events: none;
+  box-shadow: none;
+}
+/* Ejecting: slide DOWN from slot to cover camera */
+.pb-polaroid.ejecting {
+  animation: pbSlideDown 1.8s cubic-bezier(0.22,1,0.36,1) forwards;
+}
+/* Landed: locked into place covering camera */
+.pb-polaroid.landed {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.32), 0 4px 16px rgba(0,0,0,0.1);
+}
+@keyframes pbSlideDown {
+  0%   { transform: translateX(-50%) translateY(-360px); opacity: 0; }
+  7%   { transform: translateX(-50%) translateY(-360px); opacity: 1; }
+  85%  { transform: translateX(-50%) translateY(8px); }
+  100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+}
+
+.pb-pol-img-wrap {
+  width: 100%; aspect-ratio: 1;
+  background: #111; position: relative; overflow: hidden;
+}
+.pb-pol-photo { width:100%; height:100%; object-fit:cover; display:block; }
+.pb-pol-label { font-family:'Caveat',cursive; font-size:18px; font-weight:700; color:#333; text-align:center; display:block; margin-top:12px; }
+.pb-pol-date  { font-family:'Caveat',cursive; font-size:12px; color:#bbb; text-align:center; display:block; margin-top:2px; }
+
+/* Stickers dropped onto the photo */
+.pb-placed {
+  position: absolute;
+  width: 64px; height: 64px; object-fit: contain;
+  cursor: move; user-select: none; touch-action: none;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.25));
+  z-index: 10;
+}
+
+/* ── ACTION BAR (save/retake) — appears below camera after photo ── */
+.pb-actions {
+  margin-top: 36px;
+  display: flex; gap: 14px; align-items: center;
+  opacity: 0; pointer-events: none;
+  transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.34,1.56,0.64,1);
+}
+.pb-actions.visible { opacity: 1; pointer-events: auto; transform: translateY(0); }
+.pb-btn-save {
+  background: #e8587a; color: #fff; border: none;
+  padding: 14px 32px; border-radius: 50px;
+  font-size: 15px; font-weight: 700; font-family:'Inter',sans-serif;
+  cursor: pointer; transition: background 0.2s, transform 0.15s;
+  display: flex; align-items: center; gap: 8px;
+}
+.pb-btn-save:hover { background: #c9385e; transform: translateY(-2px); }
+.pb-btn-retake {
+  background: transparent; color: #888;
+  border: 1.5px solid #ddd; padding: 13px 24px; border-radius: 50px;
+  font-size: 14px; font-weight: 600; font-family:'Inter',sans-serif;
+  cursor: pointer; transition: border-color 0.2s, color 0.2s;
+}
+.pb-btn-retake:hover { border-color: #aaa; color: #333; }
+.pb-drag-tip {
+  font-family: 'Caveat', cursive; font-size: 16px; color: #e8587a;
+  text-align: center; margin-top: 12px; opacity: 0;
+  transition: opacity 0.5s;
+}
+.pb-drag-tip.visible { opacity: 1; }
+
+/* flash */
+.pb-flash { position:fixed; inset:0; background:#fff; z-index:9999; opacity:0; pointer-events:none; transition:opacity 0.08s; }
+.pb-flash.on { opacity:0.85; transition:opacity 0.04s; }
+
+/* ── SHOOT HINT (doodle arrow → shutter, appears when camera is on) ── */
+.pb-shoot-hint {
+  position: absolute;
+  left: 72px; top: 136px;
+  display: flex; align-items: center; gap: 6px;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.5s ease;
+  z-index: 20;
+}
+.pb-shoot-hint.visible { opacity: 1; }
+.pb-hint-txt {
+  font-family: 'Caveat', cursive;
+  font-size: 16px; font-weight: 700; color: #e8587a;
+  white-space: nowrap;
+  animation: pbHintBounce 0.6s ease-in-out infinite alternate;
+}
+.pb-hint-arrow-svg {
+  width: 36px; flex-shrink: 0;
+  animation: pbHintBounce 0.6s ease-in-out infinite alternate;
+}
+@keyframes pbHintBounce {
+  from { transform: translateX(0)    rotate(0deg); }
+  to   { transform: translateX(-6px) rotate(-6deg); }
+}
+
+/* ── STICKER CHIP: selected state ── */
+.pb-sticker-chip.sel { border-color: #e8587a !important; background: #fff0f4 !important; box-shadow: 0 0 0 3px rgba(232,88,122,0.2); }
+.pb-pol-img-wrap.pick { cursor: crosshair; }
+</style>
+
+<div id="photobooth">
+  <div class="pb-title">
+    <h2>Take a Memory ✦</h2>
+    <p>tap the lens · shoot · drag stickers on your photo · save!</p>
+  </div>
+
+  <div class="pb-main-row">
+
+    <!-- LEFT sticker strip -->
+    <div class="pb-strip left" id="pbStripLeft">
+      <div class="pb-strip-label">drag onto<br>your photo!</div>
+      <div class="pb-sticker-chip" draggable="true" data-src="assets/doodle heart.png"><img src="assets/doodle heart.png" alt="heart" draggable="false"></div>
+      <div class="pb-sticker-chip" draggable="true" data-src="assets/doodle star.png"><img src="assets/doodle star.png" alt="star" draggable="false"></div>
+      <div class="pb-sticker-chip" draggable="true" data-src="assets/doodle flower.png"><img src="assets/doodle flower.png" alt="flower" draggable="false"></div>
+      <div class="pb-sticker-chip" draggable="true" data-src="assets/doodle crown 1.png"><img src="assets/doodle crown 1.png" alt="crown" draggable="false"></div>
+      <div class="pb-sticker-chip" draggable="true" data-src="assets/doodle butterfly.png"><img src="assets/doodle butterfly.png" alt="butterfly" draggable="false"></div>
+      <div class="pb-sticker-chip" draggable="true" data-src="assets/doodle xoxo.png"><img src="assets/doodle xoxo.png" alt="xoxo" draggable="false"></div>
+    </div>
+
+    <!-- CENTER: camera + ejecting polaroid -->
+    <div class="pb-cam-wrap" id="pbCamWrap">
+
+      <!-- Polaroid (starts above, slides down to cover camera) -->
+      <div class="pb-polaroid" id="pbPolaroid">
+        <div class="pb-pol-img-wrap" id="pbPolImgWrap">
+          <img class="pb-pol-photo" id="pbPolPhoto" src="" alt="Your photo">
+        </div>
+        <span class="pb-pol-label">✦ memory</span>
+        <span class="pb-pol-date" id="pbPolDate"></span>
+      </div>
+
+      <!-- Camera body -->
+      <div class="pb-cam-body"></div>
+      <div class="pb-slot"></div>
+      <div class="pb-flash-part"></div>
+      <div class="pb-viewfinder"><div class="pb-vf-dot"></div></div>
+      <div class="pb-sensor-1"></div>
+      <div class="pb-sensor-2"></div>
+      <div class="pb-brand"><span>instax</span>12</div>
+      <div class="pb-shutter" onclick="pbTakePhoto()" title="Shutter"></div>
+      <!-- Doodle shoot hint: points to shutter when camera is live -->
+      <div class="pb-shoot-hint" id="pbShootHint">
+        <svg class="pb-hint-arrow-svg" viewBox="0 0 52 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M50 18 C38 3, 18 5, 7 18" stroke="#e8587a" stroke-width="2.8" stroke-linecap="round"/>
+          <path d="M7 18 L16 10" stroke="#e8587a" stroke-width="2.8" stroke-linecap="round"/>
+          <path d="M7 18 L16 26" stroke="#e8587a" stroke-width="2.8" stroke-linecap="round"/>
+        </svg>
+        <span class="pb-hint-txt">tap to shoot!</span>
+      </div>
+      <div class="pb-lens-outer" onclick="pbStartCamera()">
+        <div class="pb-lens-mid">
+          <div class="pb-selfie"></div>
+          <div class="pb-lens-inner" id="pbLensInner">
+            <div class="pb-lens-txt">
+              <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              <span>TAP LENS</span>
+            </div>
+            <video id="pbVideo" autoplay playsinline></video>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT sticker strip -->
+    <div class="pb-strip right" id="pbStripRight">
+      <div class="pb-strip-label">drag onto<br>your photo!</div>
+      <div class="pb-sticker-chip" draggable="true" data-src="assets/doodle bow.png"><img src="assets/doodle bow.png" alt="bow" draggable="false"></div>
+      <div class="pb-sticker-chip" draggable="true" data-src="assets/doodle red flower.png"><img src="assets/doodle red flower.png" alt="red flower" draggable="false"></div>
+      <div class="pb-sticker-chip" draggable="true" data-src="assets/hearts doodle 1.png"><img src="assets/hearts doodle 1.png" alt="hearts" draggable="false"></div>
+      <div class="pb-sticker-chip" draggable="true" data-src="assets/have a nice day doodle 1.png"><img src="assets/have a nice day doodle 1.png" alt="nice day" draggable="false"></div>
+      <div class="pb-sticker-chip" draggable="true" data-src="assets/doodle heart.png"><img src="assets/doodle heart.png" alt="heart 2" draggable="false"></div>
+      <div class="pb-sticker-chip" draggable="true" data-src="assets/doodle star.png"><img src="assets/doodle star.png" alt="star 2" draggable="false"></div>
+    </div>
+
+  </div><!-- /pb-main-row -->
+
+  <p class="pb-drag-tip" id="pbDragTip">← drag any sticker from the sides onto your photo! →</p>
+
+  <!-- Save / Retake (hidden until photo lands) -->
+  <div class="pb-actions" id="pbActions">
+    <button class="pb-btn-save" onclick="pbSavePhoto()">⬇ Save Photo</button>
+    <button class="pb-btn-retake" onclick="pbRetake()">↺ Retake</button>
+  </div>
+</div>
+
+<canvas id="pbCanvas" width="600" height="600" style="display:none"></canvas>
+<div class="pb-flash" id="pbFlash"></div>
+
+<script>
+(function () {
+  var stream    = null;
+  var photoUrl  = null;
+  var activeSrc = null;   /* selected sticker src (click-to-place mode) */
+  var chipDragging = false; /* flag: don't select on drag */
+
+  var video     = document.getElementById('pbVideo');
+  var canvas    = document.getElementById('pbCanvas');
+  var lensInner = document.getElementById('pbLensInner');
+  var flashEl   = document.getElementById('pbFlash');
+  var polaroid  = document.getElementById('pbPolaroid');
+  var polPhoto  = document.getElementById('pbPolPhoto');
+  var polDate   = document.getElementById('pbPolDate');
+  var polWrap   = document.getElementById('pbPolImgWrap');
+  var actions   = document.getElementById('pbActions');
+  var stripL    = document.getElementById('pbStripLeft');
+  var stripR    = document.getElementById('pbStripRight');
+  var dragTip   = document.getElementById('pbDragTip');
+  var shootHint = document.getElementById('pbShootHint');
+
+  /* ── START CAMERA ── */
+  window.pbStartCamera = function () {
+    if (stream) return;
+    if (location.protocol === 'file:') { alert('Please open via Live Server (http://127.0.0.1:5500) — file:// blocks the camera.'); return; }
+    if (!navigator.mediaDevices) { alert('Camera not available.'); return; }
+    navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user', width: { ideal: 600 }, height: { ideal: 600 } } })
+      .then(function (s) {
+        stream = s; video.srcObject = s; lensInner.classList.add('active');
+        /* show doodle shoot hint */
+        shootHint.classList.add('visible');
+      })
+      .catch(function (e) { alert(e.name === 'NotAllowedError' ? 'Camera permission denied — allow it in address bar then refresh.' : 'Camera error: ' + e.message); });
+  };
+
+  /* ── TAKE PHOTO ── */
+  window.pbTakePhoto = function () {
+    if (location.protocol === 'file:') { alert('Use Live Server!'); return; }
+    if (!stream) {
+      pbStartCamera();
+      setTimeout(function () { if (stream) pbTakePhoto(); }, 900);
+      return;
+    }
+    flashEl.classList.add('on');
+    setTimeout(function () { flashEl.classList.remove('on'); }, 110);
+
+    var ctx = canvas.getContext('2d');
+    var vw  = video.videoWidth  || 600;
+    var vh  = video.videoHeight || 600;
+    var dim = Math.min(vw, vh) || 600;
+    ctx.save();
+    ctx.translate(canvas.width, 0); ctx.scale(-1, 1);
+    try { ctx.drawImage(video, (vw - dim) / 2, (vh - dim) / 2, dim, dim, 0, 0, canvas.width, canvas.height); }
+    catch (e) { console.error(e); }
+    ctx.restore();
+
+    photoUrl = canvas.toDataURL('image/jpeg', 0.92);
+    pbEject(photoUrl);
+  };
+
+  /* ── EJECT POLAROID ── */
+  function pbEject(dataUrl) {
+    document.querySelectorAll('.pb-placed').forEach(function (s) { s.remove(); });
+
+    polPhoto.src = dataUrl;
+    var now = new Date();
+    polDate.textContent = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+
+    /* hide shoot hint (photo is now taken) */
+    shootHint.classList.remove('visible');
+
+    /* reset */
+    polaroid.classList.remove('ejecting', 'landed');
+    polaroid.style.cssText = '';
+    void polaroid.offsetWidth;
+
+    /* animate */
+    polaroid.classList.add('ejecting');
+
+    setTimeout(function () {
+      polaroid.classList.remove('ejecting');
+      polaroid.classList.add('landed');
+
+      /* show strips + actions */
+      setTimeout(function () {
+        stripL.classList.add('visible');
+        stripR.classList.add('visible');
+        actions.classList.add('visible');
+        dragTip.classList.add('visible');
+      }, 200);
+    }, 1850);
+  }
+
+  /* ── DRAG STICKER ONTO PHOTO ──
+     HTML5 drag from strips → drop on polWrap ── */
+  document.querySelectorAll('.pb-sticker-chip').forEach(function (chip) {
+    /* ── HTML5 DRAG from panel → drop on photo ── */
+    chip.addEventListener('dragstart', function (e) {
+      chipDragging = true;
+      e.dataTransfer.setData('text/plain', chip.getAttribute('data-src'));
+      e.dataTransfer.effectAllowed = 'copy';
+    });
+    chip.addEventListener('dragend', function () {
+      setTimeout(function () { chipDragging = false; }, 50);
+    });
+
+    /* ── CLICK to select (click-to-place mode) ── */
+    chip.addEventListener('click', function () {
+      if (chipDragging) return; /* was a drag, ignore */
+      var src = chip.getAttribute('data-src');
+      if (activeSrc === src) {
+        /* deselect */
+        activeSrc = null;
+        chip.classList.remove('sel');
+        polWrap.classList.remove('pick');
+        dragTip.textContent = '\u2190 drag any sticker from the sides onto your photo! \u2192';
+      } else {
+        document.querySelectorAll('.pb-sticker-chip').forEach(function (c) { c.classList.remove('sel'); });
+        chip.classList.add('sel');
+        activeSrc = src;
+        polWrap.classList.add('pick');
+        dragTip.textContent = 'now click anywhere on your photo to place the sticker!';
+      }
+    });
+  });
+
+  /* ── DROP from drag ── */
+  polWrap.addEventListener('dragover', function (e) { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; });
+
+  polWrap.addEventListener('drop', function (e) {
+    e.preventDefault();
+    var src = e.dataTransfer.getData('text/plain');
+    if (!src) return;
+    placeSticker(src, e.clientX, e.clientY);
+  });
+
+  /* ── CLICK on photo to place selected sticker ── */
+  polWrap.addEventListener('click', function (e) {
+    if (!activeSrc) return;
+    placeSticker(activeSrc, e.clientX, e.clientY);
+    /* keep selected so user can stamp multiple of the same sticker;
+       they can click the chip again or pick another to deselect */
+  });
+
+  /* ── SHARED place helper ── */
+  function placeSticker(src, clientX, clientY) {
+    var rect = polWrap.getBoundingClientRect();
+    var x = clientX - rect.left - 32;
+    var y = clientY - rect.top  - 32;
+    var stk = document.createElement('img');
+    stk.className = 'pb-placed';
+    stk.src = src;
+    stk.style.left = Math.max(-20, Math.min(x, rect.width  - 44)) + 'px';
+    stk.style.top  = Math.max(-20, Math.min(y, rect.height - 44)) + 'px';
+    polWrap.appendChild(stk);
+    makeStickerDraggable(stk);
+  }
+
+  /* ── REPOSITION PLACED STICKERS (mouse + touch) ── */
+  function makeStickerDraggable(el) {
+    var d = false, ox, oy, sl, st;
+    el.addEventListener('mousedown', function (e) {
+      d = true; e.stopPropagation(); e.preventDefault();
+      ox = e.clientX; oy = e.clientY;
+      sl = parseInt(el.style.left) || 0;
+      st = parseInt(el.style.top)  || 0;
+      el.style.zIndex = 50;
+    });
+    document.addEventListener('mousemove', function (e) {
+      if (!d) return;
+      el.style.left = (sl + e.clientX - ox) + 'px';
+      el.style.top  = (st + e.clientY - oy) + 'px';
+    });
+    document.addEventListener('mouseup', function () { if (d) { d = false; el.style.zIndex = 10; } });
+    el.addEventListener('touchstart', function (e) {
+      d = true; e.stopPropagation();
+      var t = e.touches[0]; ox = t.clientX; oy = t.clientY;
+      sl = parseInt(el.style.left) || 0; st = parseInt(el.style.top) || 0;
+    }, { passive: true });
+    document.addEventListener('touchmove', function (e) {
+      if (!d) return;
+      var t = e.touches[0];
+      el.style.left = (sl + t.clientX - ox) + 'px';
+      el.style.top  = (st + t.clientY - oy) + 'px';
+    }, { passive: true });
+    document.addEventListener('touchend', function () { d = false; });
+  }
+
+  /* ── SAVE PHOTO ── */
+  window.pbSavePhoto = function () {
+    var btn = document.querySelector('.pb-btn-save');
+    btn.textContent = 'Saving...';
+
+    var SIZE = 900, BORDER = 28, BOTTOM = 130;
+    var fc = document.createElement('canvas');
+    fc.width = SIZE; fc.height = SIZE + BOTTOM;
+    var ctx = fc.getContext('2d');
+    ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, fc.width, fc.height);
+
+    var p = new Image(); p.src = photoUrl;
+    p.onload = function () {
+      ctx.drawImage(p, BORDER, BORDER, SIZE - BORDER * 2, SIZE - BORDER * 2);
+
+      var wRect = polWrap.getBoundingClientRect();
+      var scale = (SIZE - BORDER * 2) / wRect.width;
+
+      var placed = document.querySelectorAll('.pb-placed');
+      var done = 0;
+      function finish() {
+        ctx.fillStyle = '#333'; ctx.font = 'bold 34px Georgia,serif'; ctx.textAlign = 'center';
+        ctx.fillText('\u2736 memory', fc.width / 2, SIZE + 46);
+        ctx.fillStyle = '#bbb'; ctx.font = '22px Georgia,serif';
+        ctx.fillText(polDate.textContent, fc.width / 2, SIZE + 80);
+        var a = document.createElement('a');
+        a.download = 'saihaj-memory-' + Date.now() + '.jpg';
+        a.href = fc.toDataURL('image/jpeg', 0.95);
+        a.click();
+        btn.textContent = '✓ Saved!';
+        setTimeout(function () { btn.textContent = '⬇ Save Photo'; }, 2500);
+      }
+      if (placed.length === 0) { finish(); return; }
+      placed.forEach(function (stk) {
+        var si = new Image(); si.src = stk.src;
+        function draw() {
+          ctx.drawImage(si,
+            BORDER + (parseInt(stk.style.left) || 0) * scale,
+            BORDER + (parseInt(stk.style.top)  || 0) * scale,
+            (stk.offsetWidth  || 64) * scale,
+            (stk.offsetHeight || 64) * scale);
+          done++;
+          if (done === placed.length) finish();
+        }
+        si.onload = draw;
+        if (si.complete) draw();
+      });
+    };
+  };
+
+  /* ── RETAKE ── */
+  window.pbRetake = function () {
+    polaroid.classList.remove('ejecting', 'landed');
+    polaroid.style.cssText = '';
+    stripL.classList.remove('visible');
+    stripR.classList.remove('visible');
+    actions.classList.remove('visible');
+    dragTip.classList.remove('visible');
+    dragTip.textContent = '\u2190 drag any sticker from the sides onto your photo! \u2192';
+    document.querySelectorAll('.pb-placed').forEach(function (s) { s.remove(); });
+    /* reset selection */
+    activeSrc = null;
+    document.querySelectorAll('.pb-sticker-chip').forEach(function (c) { c.classList.remove('sel'); });
+    polWrap.classList.remove('pick');
+    /* re-show shoot hint (camera still on) */
+    if (stream) shootHint.classList.add('visible');
+  };
+})();
+</script>
+<!-- PHOTO BOOTH END -->
+
+<style>
+/* FOOTER */
+.site-footer {
+  padding: 80px 52px 60px;
+  text-align: center;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  border-top: 1px solid rgba(180, 165, 150, 0.12);
+}
+
+.footer-quirk {
+  font-family: 'Caveat', cursive;
+  font-size: 28px;
+  color: #1a1a1a;
+  font-weight: 700;
+}
+
+.social-links {
+  display: flex;
+  gap: 20px;
+}
+
+.social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: transparent;
+  color: #888;
+  transition: all 0.3s ease;
+  border: 2px solid #e0d8d0;
+}
+
+.social-link svg {
+  width: 20px;
+  height: 20px;
+  transition: transform 0.3s ease;
+}
+
+.social-link:hover {
+  transform: translateY(-4px);
+  background: #fff;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+}
+
+.social-link.ig:hover { color: #E1306C; border-color: #E1306C; }
+.social-link.li:hover { color: #0077b5; border-color: #0077b5; }
+.social-link.tw:hover { color: #000000; border-color: #000000; }
+.social-link.be:hover { color: #1769ff; border-color: #1769ff; }
+
+.footer-copy {
+  margin-top: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  color: #bbb;
+}
+</style>
+
+<footer class="site-footer">
+  <div class="footer-quirk">Still here? We’d probably work well together.</div>
+  <div class="social-links">
+    <a href="https://www.instagram.com/saihajdesigns/?hl=en" target="_blank" class="social-link ig" title="Instagram">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm3.98-10.181a1.44 1.44 0 11-2.88 0 1.44 1.44 0 012.88 0z"/></svg>
+    </a>
+    <a href="https://www.linkedin.com/in/saihaj-dheer-192338297/" target="_blank" class="social-link li" title="LinkedIn">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+    </a>
+    <a href="https://x.com/saihajdheer" target="_blank" class="social-link tw" title="Twitter / X">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+    </a>
+    <a href="https://www.behance.net/saihajdheer" target="_blank" class="social-link be" title="Behance">
+      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 7h-7v-2h7v2zm1.726 10c-.442 1.297-2.029 3-5.101 3-3.074 0-5.564-1.729-5.564-5.675 0-3.918 2.338-5.697 5.32-5.697 3.157 0 5.393 2.01 5.393 5.361 0 .913-.112 1.55-.268 2.011h-7.133c.187 1.468 1.181 2.226 2.654 2.226 1.473 0 2.259-.728 2.608-1.344h2.091zm-7.242-2.923h4.946c-.141-1.313-1.096-2.144-2.583-2.144-1.47 0-2.229.831-2.363 2.144zm-10.466 5.923h-6.018v-15.022h5.32c2.058 0 4.197.931 4.197 3.714 0 1.942-1.127 3.149-2.731 3.518 1.905.342 3.179 1.625 3.179 3.826 0 3.018-2.219 3.964-3.947 3.964zm-3.69-2.332h2.366c1.144 0 2.046-.516 2.046-1.892 0-1.464-1.05-1.921-2.029-1.921h-2.383v3.813zm0-5.912h2.155c1.071 0 1.838-.497 1.838-1.677 0-1.171-.747-1.611-1.782-1.611h-2.211v3.288z"/></svg>
+    </a>
+  </div>
+  <div class="footer-copy">© 2026 Saihaj Dheer. All rights reserved.</div>
+</footer>
+
+
+      <!-- MODAL -->
+      <div class="mbg" id="modal">
+        <div class="mcard">
+          <button class="mclose" onclick="document.getElementById('modal').classList.remove('open')">âœ•</button>
+          <p class="mname">Saihaj Dheer</p>
+          <p class="mrole">UI/UX Designer &nbsp;âœ¦&nbsp; B.Design @ LPU</p>
+          <div>
+            <a class="mlink" href="https://www.linkedin.com/in/saihaj-dheer-192338297/" target="_blank">ðŸ”—
+              LinkedIn</a>
+            <a class="mlink" href="mailto:saihajdheer@gmail.com">âœ‰ Email</a>
+            <a class="mlink" id="modalResumeBtn" onclick="openResume()" href="#">ðŸ“„ Resume</a>
+
+            <p class="msec">Internships</p>
+            <div class="mexp">
+              <div class="mexp-title">Intern Designer â€” AYMUN</div>
+              <div class="mexp-org">Apeejay Youth Model United Nations</div>
+              <div class="mexp-date">Sep 2025 â€“ Nov 2025 Â· Punjab</div>
+              <div class="mexp-desc">Designed visually impactful creatives and promotional content to strengthen event
+                branding. Contributed to planning, organization, and execution of the AYMUN Conference.</div>
+            </div>
+            <div class="mexp">
+              <div class="mexp-title">Social Media Designer â€” ASMUN</div>
+              <div class="mexp-org">Apeejay Stya Model United Nations</div>
+              <div class="mexp-date">Jun 2025 â€“ Aug 2025 Â· Punjab</div>
+              <div class="mexp-desc">Created visually engaging design assets and promotional materials to build a
+                cohesive visual identity across all communications.</div>
+            </div>
+            <p class="msec">Projects</p>
+            <div class="mexp">
+              <div class="mexp-title">Helpsters</div>
+              <div class="mexp-org">UI/UX Designer</div>
+              <div class="mexp-date">Jan 2025 â€“ May 2025</div>
+              <div class="mexp-desc">A dyslexia-friendly digital application focused on accessible, clear, and inclusive
+                visual communication.</div>
+            </div>
+            <div class="mexp">
+              <div class="mexp-title">tiint Smartwatch</div>
+              <div class="mexp-org">UI/UX Designer</div>
+              <div class="mexp-date">Aug 2025 â€“ Nov 2025</div>
+              <div class="mexp-desc">Hybrid modular smartwatch concept blending analog emotion with digital utility.
+                Developed product concept, watch UI, mobile app, and design system through user research.</div>
+            </div>
+            <p class="msec">Education</p>
+            <div class="mexp">
+              <div class="mexp-title">B.Design (UI/UX) â€” 9.1 CGPA</div>
+              <div class="mexp-org">Lovely Professional University</div>
+              <div class="mexp-date">2023 â€“ Present Â· Phagwara, Punjab</div>
+            </div>
+            <p class="msec">Skills</p>
+            <div class="mtags">
+              <span class="mtag">Figma</span><span class="mtag">Adobe Photoshop</span>
+              <span class="mtag">Adobe Illustrator</span><span class="mtag">User Research</span>
+              <span class="mtag">Wireframing</span><span class="mtag">Usability Testing</span>
+              <span class="mtag">Branding</span><span class="mtag">Social Media Design</span>
+              <span class="mtag-blue mtag">Google UX Design (Coursera)</span>
+            </div>
+          </div>
+        </div>
+
+        <script>
+          /* â”€â”€ SMOOTH SCROLL HELPER â”€â”€ */
+          function scrollTo(id) {
+            var el = document.getElementById(id);
+            if (!el) return;
+            /* offset for sticky nav height (~68px) */
+            var navH = 68;
+            var top = el.getBoundingClientRect().top + window.pageYOffset - navH;
+            window.scrollTo({ top: top, behavior: 'smooth' });
+          }
+
+          /* â”€â”€ RESUME OPEN â”€â”€ */
+          function openResume() {
+            window.open('assets/CV_202604040911586316_12301117.pdf', '_blank');
+          }
+
+          /* â”€â”€ SPLASH ANIMATION â”€â”€ */
+          window.addEventListener('load', function () {
+            var letters = document.querySelectorAll('.letter');
+            var sub = document.getElementById('splashSub');
+            var usvg = document.getElementById('usvg');
+            var upath = document.getElementById('upath');
+            var splash = document.getElementById('splash');
+            var main = document.getElementById('main');
+
+            letters.forEach(function (l, i) {
+              setTimeout(function () { l.classList.add('show'); }, 200 + i * 110);
+            });
+            var after = 200 + (letters.length - 1) * 110;
+
+            setTimeout(function () {
+              usvg.classList.add('vis');
+              var s = null;
+              (function anim(ts) {
+                if (!s) s = ts;
+                var p = Math.min((ts - s) / 700, 1);
+                upath.style.strokeDashoffset = String(560 * (1 - p));
+                if (p < 1) requestAnimationFrame(anim);
+              })(performance.now());
+            }, after + 200);
+
+            setTimeout(function () { sub.classList.add('show'); }, after + 420);
+
+            setTimeout(function () {
+              splash.style.opacity = '0';
+              setTimeout(function () {
+                splash.style.display = 'none';
+                main.style.display = 'block';
+              }, 700);
+            }, after + 1800);
+          });
+
+          /* â”€â”€ MODAL â”€â”€ */
+          window.openModal = function () { document.getElementById('modal').classList.add('open'); };
+          document.getElementById('modal').addEventListener('click', function (e) {
+            if (e.target === this) this.classList.remove('open');
+          });
+
+          /* â”€â”€ DRAGGABLE POLAROIDS â”€â”€ */
+          function makeDraggable(el) {
+            var drag = false, ox = 0, oy = 0, sl = 0, st = 0;
+            var base = parseFloat(el.getAttribute('data-b')) || 0;
+            el.addEventListener('mousedown', function (e) {
+              drag = true; el.style.animation = 'none'; el.style.zIndex = 50;
+              ox = e.clientX; oy = e.clientY; sl = el.offsetLeft; st = el.offsetTop;
+              e.preventDefault();
+            });
+            document.addEventListener('mousemove', function (e) {
+              if (!drag) return;
+              var dx = e.clientX - ox, dy = e.clientY - oy;
+              el.style.left = (sl + dx) + 'px'; el.style.top = (st + dy) + 'px';
+              el.style.right = 'auto'; el.style.bottom = 'auto';
+              el.style.transform = 'rotate(' + (base + dx * 0.04) + 'deg)';
+            });
+            document.addEventListener('mouseup', function () {
+              if (!drag) return; drag = false; el.style.zIndex = 5;
+              el.style.transform = 'rotate(' + base + 'deg)';
+            });
+          }
+          ['p1', 'p2', 'p3', 'p4', 'p5', 'p6', 'p7', 'p8'].forEach(function (id) {
+            var el = document.getElementById(id); if (el) makeDraggable(el);
+          });
+
+          /* â”€â”€ SAY HELLO POPUP â”€â”€ */
+          window.toggleHelloPopup = function(e) {
+            e.stopPropagation();
+            document.getElementById('helloPopup').classList.toggle('show');
+          };
+          window.copyHelloEmail = function() {
+            navigator.clipboard.writeText('saihajdheer@gmail.com').then(() => {
+              var btn = document.getElementById('hpCopyBtn');
+              btn.innerText = 'Copied!';
+              setTimeout(() => btn.innerText = 'Copy', 2000);
+            });
+          };
+          document.addEventListener('click', function(e) {
+            var popup = document.getElementById('helloPopup');
+            if (popup && popup.classList.contains('show') && !e.target.closest('.hello-wrap')) {
+              popup.classList.remove('show');
+            }
+          });
+        </script>
+</body>
+
+</html>
