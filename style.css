@@ -346,7 +346,7 @@
       cursor: grab;
       user-select: none;
       z-index: 5;
-      width: 122px;
+      width: 142px;
       transition: box-shadow .2s;
     }
 
@@ -361,7 +361,7 @@
 
     .pol-img {
       width: 100%;
-      height: 110px;
+      height: 130px;
       border-radius: 2px;
       display: flex;
       align-items: center;
