@@ -197,12 +197,16 @@
 
     <div class="about-text">
       <p class="about-me-headline">
-        I am Saihaj, a <span style="white-space: nowrap;">UI/U<span style="position: relative; z-index: 2;">X</span><img src="assets/laptop sticker 1.png" class="animated-sticker sticker-1" style="height: 90px; padding: 0; background: transparent; border: none; box-shadow: none; margin: -30px -10px -30px -20px; position: relative; z-index: 1; vertical-align: middle;"> Design</span> student passionate about creating visual identities <span class="animated-sticker sticker-2">&#x1F3A8;</span> and digital experiences <img src="assets/interface.png" class="animated-sticker" style="height: 80px; padding: 0; background: transparent; border: none; box-shadow: none; margin: -25px 0; position: relative; z-index: 1; vertical-align: middle; transform: rotate(-8deg);">
+        I am Saihaj,<br>
+        a UI/UX Design<img src="assets/laptop sticker 1.png" class="animated-sticker sticker-1" style="height: 110px; margin: -40px 0 -40px 0px; vertical-align: middle;"> student<br>
+        passionate about creating<br>
+        visual identities<img src="assets/visual%20identity.png" class="animated-sticker sticker-2" style="height: 100px; margin: -30px 0 -30px 0px; vertical-align: middle; transform: rotate(8deg);"><br>
+        &amp; digital experiences<img src="assets/interface.png" class="animated-sticker sticker-3" style="height: 100px; margin: -30px 0 -30px 0px; vertical-align: middle; transform: rotate(-14deg);">
       </p>
 
       <div style="margin-top: 30px; display: flex; gap: 15px; flex-wrap: wrap;">
         <a href="assets/CV_202604040911586316_12301117.pdf" target="_blank" class="resume-btn" style="text-decoration:none;">Resume</a>
-        <a href="#projects" class="about-btn" style="text-decoration:none;">About Me</a>
+        <a href="#home" class="about-btn" style="text-decoration:none;">About Me</a>
       </div>
     </div>
   </div>
@@ -212,14 +216,13 @@
 <div id="photobooth">
   <div class="pb-title">
     <h2>Take a Memory ✦</h2>
-    <p>tap the lens · shoot · drag stickers on your photo · save!</p>
+    <p>TAP THE LENS <span class="pb-dot"></span> SHOOT <span class="pb-dot"></span> DRAG STICKERS ON YOUR PHOTO <span class="pb-dot"></span> SAVE</p>
   </div>
-
   <div class="pb-main-row">
 
     <!-- LEFT sticker strip -->
     <div class="pb-strip left" id="pbStripLeft">
-      <div class="pb-strip-label">drag onto<br>your photo!</div>
+      <div class="pb-strip-label">drag onto<br>your photo.</div>
       <div class="pb-sticker-chip" draggable="true" data-src="assets/doodle heart.png"><img src="assets/doodle heart.png" alt="heart" draggable="false"></div>
       <div class="pb-sticker-chip" draggable="true" data-src="assets/doodle star.png"><img src="assets/doodle star.png" alt="star" draggable="false"></div>
       <div class="pb-sticker-chip" draggable="true" data-src="assets/doodle flower.png"><img src="assets/doodle flower.png" alt="flower" draggable="false"></div>
@@ -256,7 +259,7 @@
           <path d="M7 18 L16 10" stroke="#e8587a" stroke-width="2.8" stroke-linecap="round"/>
           <path d="M7 18 L16 26" stroke="#e8587a" stroke-width="2.8" stroke-linecap="round"/>
         </svg>
-        <span class="pb-hint-txt">tap to shoot!</span>
+        <span class="pb-hint-txt">tap to shoot.</span>
       </div>
       <div class="pb-lens-outer" onclick="pbStartCamera()">
         <div class="pb-lens-mid">
@@ -264,7 +267,7 @@
           <div class="pb-lens-inner" id="pbLensInner">
             <div class="pb-lens-txt">
               <svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
-              <span>TAP LENS</span>
+              <span>tap lens.</span>
             </div>
             <video id="pbVideo" autoplay playsinline></video>
           </div>
@@ -274,7 +277,7 @@
 
     <!-- RIGHT sticker strip -->
     <div class="pb-strip right" id="pbStripRight">
-      <div class="pb-strip-label">drag onto<br>your photo!</div>
+      <div class="pb-strip-label">drag onto<br>your photo.</div>
       <div class="pb-sticker-chip" draggable="true" data-src="assets/doodle bow.png"><img src="assets/doodle bow.png" alt="bow" draggable="false"></div>
       <div class="pb-sticker-chip" draggable="true" data-src="assets/doodle red flower.png"><img src="assets/doodle red flower.png" alt="red flower" draggable="false"></div>
       <div class="pb-sticker-chip" draggable="true" data-src="assets/hearts doodle 1.png"><img src="assets/hearts doodle 1.png" alt="hearts" draggable="false"></div>
@@ -285,7 +288,7 @@
 
   </div><!-- /pb-main-row -->
 
-  <p class="pb-drag-tip" id="pbDragTip">← drag any sticker from the sides onto your photo! →</p>
+  <p class="pb-drag-tip" id="pbDragTip">← drag any sticker from the sides onto your photo. →</p>
 
   <!-- Save / Retake (hidden until photo lands) -->
   <div class="pb-actions" id="pbActions">
@@ -318,8 +321,99 @@
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
     </a>
   </div>
-  <div class="footer-copy">© 2026 Saihaj Dheer. All rights reserved.</div>
 </footer>
+
+<!-- PLAYGROUND -->
+<section id="playground">
+  <div class="pg-header">
+    <h2>Playground ✦</h2>
+    <p>DRAW <span class="pb-dot"></span> SCRIBBLE <span class="pb-dot"></span> IMPORT YOUR POLAROID <span class="pb-dot"></span> SAVE YOUR ART</p>
+  </div>
+
+  <div class="pg-canvas-area">
+    <!-- Toolbar -->
+    <div class="pg-toolbar" id="pgToolbar">
+      <!-- Brush sizes -->
+      <div class="pg-tool-group pg-sizes">
+        <button class="pg-size-btn" data-size="2" title="Fine"><span style="width:4px;height:4px;"></span></button>
+        <button class="pg-size-btn" data-size="4" title="Thin"><span style="width:6px;height:6px;"></span></button>
+        <button class="pg-size-btn active" data-size="6" title="Medium"><span style="width:9px;height:9px;"></span></button>
+        <button class="pg-size-btn" data-size="10" title="Thick"><span style="width:12px;height:12px;"></span></button>
+        <button class="pg-size-btn" data-size="16" title="Bold"><span style="width:16px;height:16px;"></span></button>
+      </div>
+
+      <div class="pg-divider"></div>
+
+      <!-- Colors -->
+      <div class="pg-tool-group pg-colors">
+        <button class="pg-color-btn active" data-color="#1a1a1a" style="background:#1a1a1a;" title="Black"></button>
+        <button class="pg-color-btn" data-color="#e8587a" style="background:#e8587a;" title="Pink"></button>
+        <button class="pg-color-btn" data-color="#ef4444" style="background:#ef4444;" title="Red"></button>
+        <button class="pg-color-btn" data-color="#f97316" style="background:#f97316;" title="Orange"></button>
+        <button class="pg-color-btn" data-color="#eab308" style="background:#eab308;" title="Yellow"></button>
+        <button class="pg-color-btn" data-color="#22c55e" style="background:#22c55e;" title="Green"></button>
+        <button class="pg-color-btn" data-color="#06b6d4" style="background:#06b6d4;" title="Cyan"></button>
+        <button class="pg-color-btn" data-color="#3b82f6" style="background:#3b82f6;" title="Blue"></button>
+        <button class="pg-color-btn" data-color="#8b5cf6" style="background:#8b5cf6;" title="Purple"></button>
+        <button class="pg-color-btn" data-color="#ec4899" style="background:#ec4899;" title="Magenta"></button>
+      </div>
+
+      <div class="pg-divider"></div>
+
+      <!-- Eraser -->
+      <button class="pg-icon-btn" id="pgEraserBtn" title="Eraser">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m7 21-4.3-4.3c-1-1-1-2.5 0-3.4l9.6-9.6c1-1 2.5-1 3.4 0l5.6 5.6c1 1 1 2.5 0 3.4L13 21"/><path d="M22 21H7"/><path d="m5 11 9 9"/></svg>
+      </button>
+
+      <div class="pg-divider"></div>
+
+      <!-- Grid toggle -->
+      <button class="pg-icon-btn active" id="pgGridBtn" title="Toggle Grid">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M3 15h18"/><path d="M9 3v18"/><path d="M15 3v18"/></svg>
+      </button>
+
+      <div class="pg-divider"></div>
+
+      <!-- Undo / Redo -->
+      <button class="pg-icon-btn" id="pgUndoBtn" title="Undo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7v6h6"/><path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/></svg>
+      </button>
+      <button class="pg-icon-btn" id="pgRedoBtn" title="Redo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 7v6h-6"/><path d="M3 17a9 9 0 0 1 9-9 9 9 0 0 1 6 2.3L21 13"/></svg>
+      </button>
+    </div>
+
+    <!-- Action buttons row -->
+    <div class="pg-actions-row">
+      <!-- Smooth toggle -->
+      <button class="pg-action-btn pg-smooth-toggle" id="pgSmoothBtn" title="Toggle Smooth Lines">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17 C6 11, 9 3, 12 9 S18 21, 21 11"/></svg>
+        <span>Smooth</span>
+      </button>
+      <button class="pg-action-btn" id="pgImportBtn" title="Import Image">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+        <span>Import Image</span>
+      </button>
+      <button class="pg-action-btn" id="pgClearBtn" title="Clear Canvas">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"/><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+        <span>Clear</span>
+      </button>
+      <button class="pg-action-btn pg-save-btn" id="pgSaveBtn" title="Save Drawing">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        <span>Save</span>
+      </button>
+    </div>
+
+    <!-- Hidden file input for import -->
+    <input type="file" id="pgFileInput" accept="image/*" style="display:none">
+
+    <!-- Canvas container -->
+    <div class="pg-canvas-wrap" id="pgCanvasWrap">
+      <canvas id="pgCanvas"></canvas>
+    </div>
+  </div>
+</section>
+<!-- PLAYGROUND END -->
 
       <!-- MODAL -->
       <div class="mbg" id="modal">

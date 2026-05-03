@@ -98,7 +98,7 @@
     .splash-sub {
       font-family: 'Caveat', cursive;
       font-size: 18px;
-      color: #aaa;
+      color: #555;
       margin-top: 14px;
       letter-spacing: 2px;
       opacity: 0;
@@ -291,7 +291,7 @@
     .hero-title .sub {
       font-family: 'Caveat', cursive;
       font-size: 17px;
-      color: #bbb;
+      color: #666;
       display: block;
       margin-bottom: 6px;
     }
@@ -996,20 +996,17 @@
 
 .animated-sticker {
     display: inline-block;
-    background: #f8f8f8;
-    padding: 4px 10px;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     vertical-align: middle;
-    font-size: 24px;
     animation: float-sticker 3.5s ease-in-out infinite;
-    border: 1px solid #eaeaea;
-    margin: 0 4px;
     line-height: 1;
+    pointer-events: none;
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-font-smoothing: antialiased;
   }
   .sticker-1 { animation-delay: 0s; }
-  .sticker-2 { animation-delay: 1s; padding: 4px 8px; }
-  .sticker-3 { animation-delay: 2s; background: transparent; box-shadow: none; border: none; font-size: 32px; margin-top: -10px; }
+  .sticker-2 { animation-delay: 1s; }
+  .sticker-3 { animation-delay: 2s; }
   @keyframes float-sticker {
     0%, 100% { transform: translateY(0) rotate(-2deg); }
     50% { transform: translateY(-8px) rotate(4deg); }
@@ -1126,7 +1123,7 @@
 }
 .pb-title { text-align: center; margin-bottom: 24px; }
 .pb-title h2 { font-family:'Inter',sans-serif; font-size:clamp(28px,4vw,42px); font-weight:900; color:#1a1a1a; letter-spacing:-1px; }
-.pb-title p { font-family:'Caveat',cursive; font-size:20px; color:#888; margin-top:8px; }
+.pb-title p { font-family:'Inter Tight',sans-serif !important; font-size:16px; color:#888; margin-top:8px; text-transform: lowercase; }
 
 /* ── MAIN ROW: [strip] [camera+polaroid] [strip] ── */
 .pb-main-row {
@@ -1159,7 +1156,7 @@
 .pb-sticker-chip:hover { transform: scale(1.12) rotate(-4deg); box-shadow: 0 8px 24px rgba(0,0,0,0.13); border-color: #f4d0d8; }
 .pb-sticker-chip:active { cursor: grabbing; transform: scale(1.05); }
 .pb-sticker-chip img { width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
-.pb-strip-label { font-family:'Caveat',cursive; font-size:13px; color:#bbb; text-align:center; }
+.pb-strip-label { font-family:'Inter Tight',sans-serif !important; font-size:11px; color:#bbb; text-align:center; text-transform: lowercase; }
 
 /* ── CAMERA WRAP (position: relative — polaroid is absolute inside) ── */
 .pb-cam-wrap {
@@ -1239,7 +1236,7 @@
 .pb-lens-txt {
   position: absolute; z-index: 2; color: rgba(255,255,255,0.6);
   pointer-events: none; display: flex; flex-direction: column;
-  align-items: center; gap: 4px; font-weight: bold; font-size: 10px; font-family:'Inter',sans-serif;
+    align-items: center; gap: 4px; font-weight: bold; font-size: 10px; font-family:'Inter Tight',sans-serif; text-transform: lowercase;
 }
 .pb-lens-txt svg { width:20px; height:20px; stroke:rgba(255,255,255,0.6); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
 .pb-lens-inner.active .pb-lens-txt { display: none; }
@@ -1298,11 +1295,37 @@
 /* Stickers dropped onto the photo */
 .pb-placed {
   position: absolute;
-  width: 64px; height: 64px; object-fit: contain;
-  cursor: move; user-select: none; touch-action: none;
+  width: 64px; height: 64px;
+  cursor: grab; user-select: none; touch-action: none;
   filter: drop-shadow(0 2px 8px rgba(0,0,0,0.25));
   z-index: 10;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px dashed transparent;
+  transition: border-color 0.2s;
 }
+.pb-placed:hover, .pb-placed.selected { border-color: rgba(232, 88, 122, 0.5); }
+.pb-placed img { width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
+
+.pb-stk-tools {
+  position: absolute; top: -30px; left: 50%; transform: translateX(-50%);
+  background: #fff; border-radius: 20px; padding: 2px 6px;
+  display: flex; gap: 4px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+  opacity: 0; pointer-events: none; transition: opacity 0.2s; z-index: 60;
+}
+.pb-placed:hover .pb-stk-tools, .pb-placed.selected .pb-stk-tools { opacity: 1; pointer-events: auto; }
+.pb-stk-tool {
+  width: 22px; height: 22px; border-radius: 50%; border: none;
+  background: #f5f0ea; color: #555; font-size: 14px; font-weight: bold;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s;
+}
+.pb-stk-tool:hover { background: #e8e2db; color: #1a1a1a; }
+.pb-stk-tool.del { color: #e8587a; }
+.pb-stk-tool.del:hover { background: #fee2e2; }
+
+/* Playground selected image */
+.pg-canvas-wrap.img-selected { cursor: default; }
+
 
 /* ── ACTION BAR (save/retake) — appears below camera after photo ── */
 .pb-actions {
@@ -1329,9 +1352,10 @@
 }
 .pb-btn-retake:hover { border-color: #aaa; color: #333; }
 .pb-drag-tip {
-  font-family: 'Caveat', cursive; font-size: 16px; color: #e8587a;
+  font-family: 'Inter Tight', sans-serif !important; font-size: 14px; color: #e8587a;
   text-align: center; margin-top: 12px; opacity: 0;
   transition: opacity 0.5s;
+  text-transform: lowercase;
 }
 .pb-drag-tip.visible { opacity: 1; }
 
@@ -1350,10 +1374,11 @@
 }
 .pb-shoot-hint.visible { opacity: 1; }
 .pb-hint-txt {
-  font-family: 'Caveat', cursive;
-  font-size: 16px; font-weight: 700; color: #e8587a;
+  font-family: 'Inter Tight', sans-serif !important;
+  font-size: 14px; font-weight: 700; color: #e8587a;
   white-space: nowrap;
   animation: pbHintBounce 0.6s ease-in-out infinite alternate;
+  text-transform: lowercase;
 }
 .pb-hint-arrow-svg {
   width: 36px; flex-shrink: 0;
@@ -1424,12 +1449,265 @@
 .social-link.be:hover { color: #1769ff; border-color: #1769ff; }
 
 .footer-copy {
-  margin-top: 10px;
-  font-family: 'Inter', sans-serif;
-  font-size: 13px;
-  color: #bbb;
+  display: none;
+}
+.pb-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background-color: #e8587a;
+  border-radius: 50%;
+  margin: 0 8px;
+  vertical-align: middle;
 }
 .social-link.em:hover { color: #e8587a; border-color: #e8587a; }
 
 
 h1, h2, h3, h4, h5, h6, .hero-title h1, .pb-title h2, .about-me-headline, .about-big, .mname, .proj-title { font-family: 'Inter Tight', sans-serif !important; }
+
+/* ═══════════════════════════════════════════════
+   PLAYGROUND — Drawing Canvas Section
+═══════════════════════════════════════════════ */
+#playground {
+  padding: 60px 24px 100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+}
+
+.pg-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.pg-header h2 {
+  font-family: 'Inter Tight', sans-serif !important;
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 900;
+  color: #1a1a1a;
+  letter-spacing: -1px;
+}
+
+.pg-header p {
+  font-family: 'Inter Tight', sans-serif !important;
+  font-size: 16px;
+  color: #888;
+  margin-top: 8px;
+  text-transform: lowercase;
+}
+
+.pg-canvas-area {
+  width: 100%;
+  max-width: 1400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+/* ── TOOLBAR ── */
+.pg-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: #fff;
+  padding: 10px 20px;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+  border: 1px solid rgba(180,165,150,0.15);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pg-tool-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.pg-divider {
+  width: 1px;
+  height: 28px;
+  background: #e8e2db;
+  flex-shrink: 0;
+}
+
+/* ── SIZE BUTTONS ── */
+.pg-size-btn {
+  width: 32px;
+  height: 32px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.pg-size-btn span {
+  display: block;
+  background: #1a1a1a;
+  border-radius: 50%;
+  transition: background 0.2s;
+}
+
+.pg-size-btn:hover {
+  background: #f5f0ea;
+}
+
+.pg-size-btn.active {
+  background: #f5f0ea;
+  box-shadow: inset 0 0 0 1.5px rgba(180,165,150,0.3);
+}
+
+/* ── COLOR BUTTONS ── */
+.pg-color-btn {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 2.5px solid transparent;
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.2s;
+  outline: none;
+  flex-shrink: 0;
+}
+
+.pg-color-btn:hover {
+  transform: scale(1.2);
+}
+
+.pg-color-btn.active {
+  box-shadow: 0 0 0 2.5px #fff, 0 0 0 4.5px currentColor;
+  transform: scale(1.15);
+}
+
+/* ── ICON BUTTONS (eraser, grid, undo, redo) ── */
+.pg-icon-btn {
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #888;
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+}
+
+.pg-icon-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.pg-icon-btn:hover {
+  background: #f5f0ea;
+  color: #1a1a1a;
+}
+
+.pg-icon-btn.active {
+  background: #1a1a1a;
+  color: #fff;
+}
+
+/* ── ACTION BUTTONS ROW ── */
+.pg-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.pg-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
+  border: 1.5px solid #e0d8d0;
+  background: #fff;
+  border-radius: 50px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.pg-action-btn svg {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+.pg-action-btn:hover {
+  border-color: #aaa;
+  color: #1a1a1a;
+  background: #fdf9f6;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+}
+
+.pg-action-btn.pg-save-btn {
+  background: #e8587a;
+  color: #fff;
+  border-color: #e8587a;
+}
+
+/* Smooth toggle — active state */
+.pg-smooth-toggle.active {
+  background: #1a1a1a;
+  color: #fff;
+  border-color: #1a1a1a;
+}
+
+.pg-smooth-toggle.active:hover {
+  background: #333;
+  border-color: #333;
+  color: #fff;
+}
+
+.pg-action-btn.pg-save-btn:hover {
+  background: #c9385e;
+  border-color: #c9385e;
+  color: #fff;
+  box-shadow: 0 8px 20px rgba(232,88,122,0.25);
+}
+
+/* ── CANVAS CONTAINER ── */
+.pg-canvas-wrap {
+  width: 100%;
+  aspect-ratio: 2.6 / 1;
+  background: #f8f6f3;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+  border: 1px solid rgba(180,165,150,0.15);
+  cursor: crosshair;
+}
+
+.pg-canvas-wrap.grid-on {
+  background-image:
+    linear-gradient(rgba(180,165,150,0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(180,165,150,0.12) 1px, transparent 1px);
+  background-size: 24px 24px;
+  background-color: #f8f6f3;
+}
+
+.pg-canvas-wrap canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+}
+
+/* eraser cursor */
+.pg-canvas-wrap.eraser-on {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='white' stroke='%23ccc' stroke-width='1.5'/%3E%3C/svg%3E") 12 12, auto;
+}
