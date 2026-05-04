@@ -98,6 +98,7 @@
     .splash-sub {
       font-family: 'Caveat', cursive;
       font-size: 18px;
+      font-weight: 700;
       color: #555;
       margin-top: 14px;
       letter-spacing: 2px;
@@ -290,10 +291,12 @@
 
     .hero-title .sub {
       font-family: 'Caveat', cursive;
-      font-size: 17px;
+      font-size: 18px;
+      font-weight: 700;
       color: #666;
       display: block;
       margin-bottom: 6px;
+      letter-spacing: 0.5px;
     }
 
     .hero-title h1 {
@@ -1123,7 +1126,7 @@
 }
 .pb-title { text-align: center; margin-bottom: 24px; }
 .pb-title h2 { font-family:'Inter',sans-serif; font-size:clamp(28px,4vw,42px); font-weight:900; color:#1a1a1a; letter-spacing:-1px; }
-.pb-title p { font-family:'Inter Tight',sans-serif !important; font-size:16px; color:#888; margin-top:8px; text-transform: lowercase; }
+.pb-title p { font-family:'Inter Tight',sans-serif !important; font-size:16px; color:#888; margin-top:8px; }
 
 /* ── MAIN ROW: [strip] [camera+polaroid] [strip] ── */
 .pb-main-row {
@@ -1156,7 +1159,7 @@
 .pb-sticker-chip:hover { transform: scale(1.12) rotate(-4deg); box-shadow: 0 8px 24px rgba(0,0,0,0.13); border-color: #f4d0d8; }
 .pb-sticker-chip:active { cursor: grabbing; transform: scale(1.05); }
 .pb-sticker-chip img { width: 100%; height: 100%; object-fit: contain; pointer-events: none; }
-.pb-strip-label { font-family:'Inter Tight',sans-serif !important; font-size:11px; color:#bbb; text-align:center; text-transform: lowercase; }
+.pb-strip-label { font-family:'Inter Tight',sans-serif !important; font-size:11px; color:#bbb; text-align:center; }
 
 /* ── CAMERA WRAP (position: relative — polaroid is absolute inside) ── */
 .pb-cam-wrap {
@@ -1236,7 +1239,7 @@
 .pb-lens-txt {
   position: absolute; z-index: 2; color: rgba(255,255,255,0.6);
   pointer-events: none; display: flex; flex-direction: column;
-    align-items: center; gap: 4px; font-weight: bold; font-size: 10px; font-family:'Inter Tight',sans-serif; text-transform: lowercase;
+    align-items: center; gap: 4px; font-weight: bold; font-size: 10px; font-family:'Inter Tight',sans-serif;
 }
 .pb-lens-txt svg { width:20px; height:20px; stroke:rgba(255,255,255,0.6); fill:none; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
 .pb-lens-inner.active .pb-lens-txt { display: none; }
@@ -1355,7 +1358,6 @@
   font-family: 'Inter Tight', sans-serif !important; font-size: 14px; color: #e8587a;
   text-align: center; margin-top: 12px; opacity: 0;
   transition: opacity 0.5s;
-  text-transform: lowercase;
 }
 .pb-drag-tip.visible { opacity: 1; }
 
@@ -1378,7 +1380,6 @@
   font-size: 14px; font-weight: 700; color: #e8587a;
   white-space: nowrap;
   animation: pbHintBounce 0.6s ease-in-out infinite alternate;
-  text-transform: lowercase;
 }
 .pb-hint-arrow-svg {
   width: 36px; flex-shrink: 0;
@@ -1494,7 +1495,6 @@ h1, h2, h3, h4, h5, h6, .hero-title h1, .pb-title h2, .about-me-headline, .about
   font-size: 16px;
   color: #888;
   margin-top: 8px;
-  text-transform: lowercase;
 }
 
 .pg-canvas-area {

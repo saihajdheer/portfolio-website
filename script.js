@@ -112,13 +112,13 @@
         activeSrc = null;
         chip.classList.remove('sel');
         polWrap.classList.remove('pick');
-        dragTip.textContent = '\u2190 drag any sticker from the sides onto your photo! \u2192';
+        dragTip.textContent = '\u2190 Drag any sticker from the sides onto your photo! \u2192';
       } else {
         document.querySelectorAll('.pb-sticker-chip').forEach(function (c) { c.classList.remove('sel'); });
         chip.classList.add('sel');
         activeSrc = src;
         polWrap.classList.add('pick');
-        dragTip.textContent = 'now click anywhere on your photo to place the sticker!';
+        dragTip.textContent = 'Now click anywhere on your photo to place the sticker!';
       }
     });
   });
@@ -305,7 +305,7 @@
     stripR.classList.remove('visible');
     actions.classList.remove('visible');
     dragTip.classList.remove('visible');
-    dragTip.textContent = '\u2190 drag any sticker from the sides onto your photo! \u2192';
+    dragTip.textContent = '\u2190 Drag any sticker from the sides onto your photo! \u2192';
     document.querySelectorAll('.pb-placed').forEach(function (s) { s.remove(); });
     /* reset selection */
     activeSrc = null;
