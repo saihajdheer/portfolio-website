@@ -1683,7 +1683,7 @@ h1, h2, h3, h4, h5, h6, .hero-title h1, .pb-title h2, .about-me-headline, .about
 .pg-canvas-wrap {
   width: 100%;
   aspect-ratio: 2.6 / 1;
-  background: #f8f6f3;
+  background: #ffffff;
   border-radius: 20px;
   overflow: hidden;
   position: relative;
@@ -1697,7 +1697,7 @@ h1, h2, h3, h4, h5, h6, .hero-title h1, .pb-title h2, .about-me-headline, .about
     linear-gradient(rgba(180,165,150,0.12) 1px, transparent 1px),
     linear-gradient(90deg, rgba(180,165,150,0.12) 1px, transparent 1px);
   background-size: 24px 24px;
-  background-color: #f8f6f3;
+  background-color: #ffffff;
 }
 
 .pg-canvas-wrap canvas {
